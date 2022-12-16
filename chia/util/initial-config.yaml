@@ -13,7 +13,7 @@ network_overrides: &network_overrides
   constants:
     mainnet:
       NETWORK_TYPE: 0
-      GENESIS_CHALLENGE: 0b8d54d081025ad2ee617e0bd28ff90a34053a2c4335333c211513a4e8eb85c3
+      GENESIS_CHALLENGE: 3c69080dc9cf008c83799ec194c98520225a70e1a1a924e266b8c0f86d7f2152
       GENESIS_PRE_FARM_POOL_PUZZLE_HASH: "c1b2f654e8e4fe4fc0e2682d50ff721ae685ad23f6b6e326361b3db300e1c11d"
       GENESIS_PRE_FARM_FARMER_PUZZLE_HASH: "c1b2f654e8e4fe4fc0e2682d50ff721ae685ad23f6b6e326361b3db300e1c11d"
     testnet0:
@@ -155,7 +155,7 @@ harvester:
 
 pool:
   # Replace this with a real puzzle hash
-  # flo_target_address: TFLO102gkhhzs60grx7cfnpng5n6rjecr89r86l5s8xux2za8k820cxsq64ssdg
+  # kop_target_address: tkop102gkhhzs60grx7cfnpng5n6rjecr89r86l5s8xux2za8k820cxsq64ssdg
   logging: *logging
   network_overrides: *network_overrides
   selected_network: *selected_network
@@ -175,7 +175,7 @@ farmer:
   pool_public_keys: []
 
   # Replace this with a real puzzle hash
-  # flo_target_address: TFLO102gkhhzs60grx7cfnpng5n6rjecr89r86l5s8xux2za8k820cxsq64ssdg
+  # kop_target_address: tkop102gkhhzs60grx7cfnpng5n6rjecr89r86l5s8xux2za8k820cxsq64ssdg
 
   # If True, starts an RPC server at the following port
   start_rpc_server: True
