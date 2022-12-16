@@ -44,8 +44,8 @@ async function main(opts) {
     console.log('Finished');
 }
 
-const appName = 'Floteo';
-const dmgIcon = '../floteo-blockchain-gui/packages/gui/src/assets/img/floteo.icns';
+const appName = 'Cryptomines';
+const dmgIcon = '../cryptomines-blockchain-gui/packages/gui/src/assets/img/cryptomines.icns';
 const dmgBackground = './assets/dmg/background.tiff';
 const outputDir = './final_installer';
 const appPath = process.argv[2]; // required

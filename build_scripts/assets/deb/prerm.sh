@@ -3,5 +3,5 @@
 
 set -e
 
-unlink /usr/bin/floteo || true
-unlink /opt/floteo || true
+unlink /usr/bin/cryptomines || true
+unlink /opt/cryptomines || true

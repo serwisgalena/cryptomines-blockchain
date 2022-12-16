@@ -1,21 +1,21 @@
 from typing import KeysView, Generator
 
 SERVICES_FOR_GROUP = {
-    "all": "floteo_harvester floteo_timelord_launcher floteo_timelord floteo_farmer floteo_full_node floteo_wallet".split(),
-    "node": "floteo_full_node".split(),
-    "harvester": "floteo_harvester".split(),
-    "farmer": "floteo_harvester floteo_farmer floteo_full_node floteo_wallet".split(),
-    "farmer-no-wallet": "floteo_harvester floteo_farmer floteo_full_node".split(),
-    "farmer-only": "floteo_farmer".split(),
-    "timelord": "floteo_timelord_launcher floteo_timelord floteo_full_node".split(),
-    "timelord-only": "floteo_timelord".split(),
-    "timelord-launcher-only": "floteo_timelord_launcher".split(),
-    "wallet": "floteo_wallet".split(),
-    "introducer": "floteo_introducer".split(),
-    "simulator": "floteo_full_node_simulator".split(),
-    "crawler": "floteo_crawler".split(),
-    "seeder": "floteo_crawler floteo_seeder".split(),
-    "seeder-only": "floteo_seeder".split(),
+    "all": "cryptomines_harvester cryptomines_timelord_launcher cryptomines_timelord cryptomines_farmer cryptomines_full_node cryptomines_wallet".split(),
+    "node": "cryptomines_full_node".split(),
+    "harvester": "cryptomines_harvester".split(),
+    "farmer": "cryptomines_harvester cryptomines_farmer cryptomines_full_node cryptomines_wallet".split(),
+    "farmer-no-wallet": "cryptomines_harvester cryptomines_farmer cryptomines_full_node".split(),
+    "farmer-only": "cryptomines_farmer".split(),
+    "timelord": "cryptomines_timelord_launcher cryptomines_timelord cryptomines_full_node".split(),
+    "timelord-only": "cryptomines_timelord".split(),
+    "timelord-launcher-only": "cryptomines_timelord_launcher".split(),
+    "wallet": "cryptomines_wallet".split(),
+    "introducer": "cryptomines_introducer".split(),
+    "simulator": "cryptomines_full_node_simulator".split(),
+    "crawler": "cryptomines_crawler".split(),
+    "seeder": "cryptomines_crawler cryptomines_seeder".split(),
+    "seeder-only": "cryptomines_seeder".split(),
 }
 
 

@@ -74,7 +74,7 @@ def check_keys(new_root: Path, keychain: Optional[Keychain] = None) -> None:
         keychain = Keychain()
     all_sks = keychain.get_all_private_keys()
     if len(all_sks) == 0:
-        print("No keys are present in the keychain. Generate them with 'flo keys generate'")
+        print("No keys are present in the keychain. Generate them with 'cryptomines keys generate'")
         return None
 
     with lock_and_load_config(new_root, "config.yaml") as config:
@@ -121,7 +121,7 @@ def check_keys(new_root: Path, keychain: Optional[Keychain] = None) -> None:
         updated_target: bool = False
         if "flo_target_address" not in config["farmer"]:
             print(
-                f"Setting the Floteo destination for the farmer reward (1/8 plus fees, solo and pooling)"
+                f"Setting the Cryptomines destination for the farmer reward (1/8 plus fees, solo and pooling)"
                 f" to {all_targets[0]}"
             )
             config["farmer"]["flo_target_address"] = all_targets[0]
@@ -136,7 +136,7 @@ def check_keys(new_root: Path, keychain: Optional[Keychain] = None) -> None:
         if "pool" not in config:
             config["pool"] = {}
         if "flo_target_address" not in config["pool"]:
-            print(f"Setting the Floteo destination address for pool reward (7/8 for solo only) to {all_targets[0]}")
+            print(f"Setting the Cryptomines destination address for pool reward (7/8 for solo only) to {all_targets[0]}")
             config["pool"]["flo_target_address"] = all_targets[0]
             updated_target = True
         elif config["pool"]["flo_target_address"] not in all_targets:
@@ -147,7 +147,7 @@ def check_keys(new_root: Path, keychain: Optional[Keychain] = None) -> None:
             )
         if updated_target:
             print(
-                f"To change the Floteo destination addresses, edit the `flo_target_address` entries in"
+                f"To change the Cryptomines destination addresses, edit the `flo_target_address` entries in"
                 f" {(new_root / 'config' / 'config.yaml').absolute()}."
             )
 
@@ -430,13 +430,13 @@ def chia_init(
     protected Keychain. When launching the daemon from the GUI, we want the GUI to
     handle unlocking the keychain.
     """
-    chia_root = os.environ.get("FLOTEO_ROOT", None)
+    chia_root = os.environ.get("CRYPTOMINES_ROOT", None)
     if chia_root is not None:
-        print(f"FLOTEO_ROOT is set to {chia_root}")
+        print(f"CRYPTOMINES_ROOT is set to {chia_root}")
 
-    print(f"Floteo directory {root_path}")
+    print(f"Cryptomines directory {root_path}")
     if root_path.is_dir() and Path(root_path / "config" / "config.yaml").exists():
-        # This is reached if FLOTEO_ROOT is set, or if user has run floteo init twice
+        # This is reached if CRYPTOMINES_ROOT is set, or if user has run cryptomines init twice
         # before a new update.
         if testnet:
             configure(
@@ -515,6 +515,6 @@ def chia_init(
             set_db_version(connection, 2)
 
     print("")
-    print("To see your keys, run 'flo keys show --show-mnemonic-seed'")
+    print("To see your keys, run 'cryptomines keys show --show-mnemonic-seed'")
 
     return 0

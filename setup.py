@@ -66,14 +66,14 @@ dev_dependencies = [
 ]
 
 kwargs = dict(
-    name="floteo-blockchain",
+    name="cryptomines-blockchain",
     author="Kopalnie Krypto",
     author_email="kontakt@kopalniekrypto.pl",
-    description="Floteo blockchain full node, farmer, timelord, and wallet.",
-    url="https://floteoblockchain.pl/",
+    description="Cryptomines blockchain full node, farmer, timelord, and wallet.",
+    url="https://cryptominesblockchain.pl/",
     license="Apache License",
     python_requires=">=3.7, <4",
-    keywords="floteo blockchain node",
+    keywords="cryptomines blockchain node",
     install_requires=dependencies,
     extras_require=dict(
         uvloop=["uvloop"],
@@ -118,18 +118,18 @@ kwargs = dict(
     ],
     entry_points={
         "console_scripts": [
-            "floteo = chia.cmds.chia:main",
-            "floteo_daemon = chia.daemon.server:main",
-            "floteo_wallet = chia.server.start_wallet:main",
-            "floteo_full_node = chia.server.start_full_node:main",
-            "floteo_harvester = chia.server.start_harvester:main",
-            "floteo_farmer = chia.server.start_farmer:main",
-            "floteo_introducer = chia.server.start_introducer:main",
-            "floteo_crawler = chia.seeder.start_crawler:main",
-            "floteo_seeder = chia.seeder.dns_server:main",
-            "floteo_timelord = chia.server.start_timelord:main",
-            "floteo_timelord_launcher = chia.timelord.timelord_launcher:main",
-            "floteo_full_node_simulator = chia.simulator.start_simulator:main",
+            "cryptomines = chia.cmds.chia:main",
+            "cryptomines_daemon = chia.daemon.server:main",
+            "cryptomines_wallet = chia.server.start_wallet:main",
+            "cryptomines_full_node = chia.server.start_full_node:main",
+            "cryptomines_harvester = chia.server.start_harvester:main",
+            "cryptomines_farmer = chia.server.start_farmer:main",
+            "cryptomines_introducer = chia.server.start_introducer:main",
+            "cryptomines_crawler = chia.seeder.start_crawler:main",
+            "cryptomines_seeder = chia.seeder.dns_server:main",
+            "cryptomines_timelord = chia.server.start_timelord:main",
+            "cryptomines_timelord_launcher = chia.timelord.timelord_launcher:main",
+            "cryptomines_full_node_simulator = chia.simulator.start_simulator:main",
         ]
     },
     package_data={
