@@ -74,7 +74,7 @@ legacy_keyring_dependencies = [
 ]
 
 kwargs = dict(
-    name="chia-blockchain",
+    name="cryptomines-blockchain",
     author="Kopalnie Krypto",
     author_email="kontakt@kopalniekrypto.pl",
     description="Cryptomines blockchain full node, farmer, timelord, and wallet.",
