@@ -695,7 +695,7 @@ class TestWalletSync:
 
         # Verify legal values for the settings to be tested
         # If spam_filter_after_n_txs is greater than 250, this test will take a long time to run.
-        # Current max value for xch_spam_amount is 0.01 XCH.
+        # Current max value for xch_spam_amount is 0.01 KOP.
         # If needed, this could be increased but we would need to farm more blocks.
         # The max dust_value could be increased, but would require farming more blocks.
         assert spam_filter_after_n_txs >= 0

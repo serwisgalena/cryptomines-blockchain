@@ -115,7 +115,7 @@ jobs:
                 ${{ inputs.matrix_mode }}: True
 
     env:
-      CHIA_ROOT: ${{ github.workspace }}/.chia/mainnet
+      CRYPTOMINES_ROOT: ${{ github.workspace }}/.chia/mainnet
       JOB_FILE_NAME: tests_${{ matrix.os.file_name }}_python-${{ matrix.python.file_name }}_${{ matrix.configuration.name }}
       BLOCKS_AND_PLOTS_VERSION: 0.29.0
 

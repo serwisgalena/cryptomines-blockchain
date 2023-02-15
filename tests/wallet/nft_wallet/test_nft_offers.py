@@ -111,7 +111,7 @@ async def test_nft_offer_with_fee(
     coins_taker = await nft_wallet_taker.get_current_nfts()
     assert len(coins_taker) == 0
 
-    # MAKE FIRST TRADE: 1 NFT for 100 xch
+    # MAKE FIRST TRADE: 1 NFT for 100 kop
     maker_balance_pre = await wallet_maker.get_confirmed_balance()
     taker_balance_pre = await wallet_taker.get_confirmed_balance()
 
@@ -170,7 +170,7 @@ async def test_nft_offer_with_fee(
     assert len(coins_maker) == 0
     assert len(coins_taker) == 1
 
-    # MAKE SECOND TRADE: 100 xch for 1 NFT
+    # MAKE SECOND TRADE: 100 kop for 1 NFT
 
     maker_balance_pre = await wallet_maker.get_confirmed_balance()
     taker_balance_pre = await wallet_taker.get_confirmed_balance()
@@ -444,7 +444,7 @@ async def test_nft_offer_with_metadata_update(
 
     assert url_to_add in updated_nft_info.also().info["metadata"]  # type: ignore
 
-    # MAKE FIRST TRADE: 1 NFT for 100 xch
+    # MAKE FIRST TRADE: 1 NFT for 100 kop
     maker_balance_pre = await wallet_maker.get_confirmed_balance()
     taker_balance_pre = await wallet_taker.get_confirmed_balance()
 

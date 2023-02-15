@@ -78,7 +78,7 @@ class Service(Generic[_T_RpcServiceProtocol]):
 
         self._log = logging.getLogger(service_name)
         self._log.warning(f"Starting service {self._service_name} ...")
-        self._log.info(f"chia-blockchain version: {chia_full_version_str()}")
+        self._log.info(f"cryptomines-blockchain version: {chia_full_version_str()}")
 
         self.service_config = self.config[service_name]
 
@@ -194,7 +194,7 @@ class Service(Generic[_T_RpcServiceProtocol]):
     async def setup_process_global_state(self) -> None:
         # Being async forces this to be run from within an active event loop as is
         # needed for the signal handler setup.
-        proctitle_name = f"chia_{self._service_name}"
+        proctitle_name = f"cryptomines_{self._service_name}"
         setproctitle(proctitle_name)
 
         global main_pid
@@ -257,7 +257,7 @@ class Service(Generic[_T_RpcServiceProtocol]):
 
         self._log.info("Waiting for socket to be closed (if opened)")
 
-        self._log.info("Waiting for ChiaServer to be closed")
+        self._log.info("Waiting for Cryptomines Server to be closed")
         await self._server.await_closed()
 
         if self.rpc_server:

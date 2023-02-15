@@ -842,7 +842,7 @@ class TestWalletSimulator:
 
         await server_2.start_client(PeerInfo(self_hostname, uint16(server_1._port)), None)
         message = "Hello World"
-        response = await api_0.sign_message_by_address({"address": encode_puzzle_hash(ph, "xch"), "message": message})
+        response = await api_0.sign_message_by_address({"address": encode_puzzle_hash(ph, "kop"), "message": message})
         puzzle: Program = Program.to((CHIP_0002_SIGN_MESSAGE_PREFIX, message))
 
         assert AugSchemeMPL.verify(

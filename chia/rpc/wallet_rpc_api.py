@@ -84,7 +84,7 @@ class WalletRpcApi:
     def __init__(self, wallet_node: WalletNode):
         assert wallet_node is not None
         self.service = wallet_node
-        self.service_name = "chia_wallet"
+        self.service_name = "cryptomines_wallet"
         self.balance_cache: Dict[int, Any] = {}
 
     def get_routes(self) -> Dict[str, Endpoint]:
@@ -1730,7 +1730,7 @@ class WalletRpcApi:
         if cancel_all:
             asset_id = None
         else:
-            asset_id = request.get("asset_id", "xch")
+            asset_id = request.get("asset_id", "kop")
 
         start: int = 0
         end: int = start + batch_size
@@ -1738,7 +1738,7 @@ class WalletRpcApi:
         log.info(f"Start cancelling offers for  {'asset_id: ' + asset_id if asset_id is not None else 'all'} ...")
         # Traverse offers page by page
         key = None
-        if asset_id is not None and asset_id != "xch":
+        if asset_id is not None and asset_id != "kop":
             key = bytes32.from_hexstr(asset_id)
         while True:
             records: List[TradeRecord] = []
@@ -1845,7 +1845,7 @@ class WalletRpcApi:
         return {
             "success": True,
             "latest_coin": coin_state.coin.name().hex(),
-            "p2_address": encode_puzzle_hash(p2_puzzle.get_tree_hash(), AddressType.XCH.hrp(self.service.config)),
+            "p2_address": encode_puzzle_hash(p2_puzzle.get_tree_hash(), AddressType.KOP.hrp(self.service.config)),
             "public_key": public_key.as_python().hex(),
             "recovery_list_hash": recovery_list_hash.as_python().hex(),
             "num_verification": num_verification.as_int(),
@@ -2696,7 +2696,7 @@ class WalletRpcApi:
             xch_coins = set([Coin.from_json_dict(xch_coin) for xch_coin in xch_coin_list])
         xch_change_target = request.get("xch_change_target", None)
         if xch_change_target is not None:
-            if xch_change_target[:2] == "xch":
+            if xch_change_target[:2] == "kop":
                 xch_change_ph = decode_puzzle_hash(xch_change_target)
             else:
                 xch_change_ph = bytes32(hexstr_to_bytes(xch_change_target))

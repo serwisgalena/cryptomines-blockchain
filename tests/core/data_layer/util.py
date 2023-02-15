@@ -133,7 +133,7 @@ class ChiaRoot:
     ) -> subprocess_CompletedProcess_str:
         # TODO: --root-path doesn't seem to work here...
         kwargs.setdefault("env", {})
-        kwargs["env"]["CHIA_ROOT"] = os.fspath(self.path)
+        kwargs["env"]["CRYPTOMINES_ROOT"] = os.fspath(self.path)
         kwargs["env"]["CHIA_KEYS_ROOT"] = os.fspath(self.path)
 
         # This is for windows

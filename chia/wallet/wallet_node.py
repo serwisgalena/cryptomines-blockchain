@@ -201,7 +201,7 @@ class WalletNode:
             # Returns first private key if fingerprint is None
             key = await keychain_proxy.get_key_for_fingerprint(fingerprint)
         except KeychainIsEmpty:
-            self.log.warning("No keys present. Create keys with the UI, or with the 'chia keys' program.")
+            self.log.warning("No keys present. Create keys with the UI, or with the 'cryptomines keys' program.")
             return None
         except KeychainKeyNotFound:
             self.log.warning(f"Key not found for fingerprint {fingerprint}")
@@ -631,7 +631,7 @@ class WalletNode:
                     default_peers_file_path="wallet/db/wallet_peers.dat",
                 ),
                 self.config["introducer_peer"],
-                self.config.get("dns_servers", ["dns-introducer.chia.net"]),
+                self.config.get("dns_servers", ["dns-introducer.cryptominesblockchain.pl"]),
                 self.config["peer_connect_interval"],
                 network_name,
                 None,

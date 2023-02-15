@@ -267,8 +267,8 @@ async def test_nft_mint_from_did_rpc(two_wallet_nodes: Any, trusted: Any, self_h
             }
             for i in range(n)
         ]
-        target_list = [encode_puzzle_hash((ph_taker), "xch") for x in range(n)]
-        royalty_address = encode_puzzle_hash(bytes32(token_bytes(32)), "xch")
+        target_list = [encode_puzzle_hash((ph_taker), "kop") for x in range(n)]
+        royalty_address = encode_puzzle_hash(bytes32(token_bytes(32)), "kop")
         royalty_percentage = 300
         fee = 100
         required_amount = n + (fee * n)
@@ -470,7 +470,7 @@ async def test_nft_mint_from_did_rpc_no_royalties(two_wallet_nodes: Any, trusted
             }
             for i in range(n)
         ]
-        target_list = [encode_puzzle_hash((ph_taker), "xch") for x in range(n)]
+        target_list = [encode_puzzle_hash((ph_taker), "kop") for x in range(n)]
         royalty_address = None
         royalty_percentage = None
         required_amount = n
@@ -612,7 +612,7 @@ async def test_nft_mint_from_did_multiple_xch(self_hostname: str, two_wallet_nod
         {"program": metadata, "royalty_pc": royalty_pc, "royalty_ph": royalty_addr} for x in range(mint_total)
     ]
 
-    # Grab two coins for testing that we can create a bulk minting with more than 1 xch coin
+    # Grab two coins for testing that we can create a bulk minting with more than 1 kop coin
     xch_coins_1 = await wallet_maker.select_coins(amount=10000)
     xch_coins_2 = await wallet_maker.select_coins(amount=10000, exclude=xch_coins_1)
     xch_coins = xch_coins_1.union(xch_coins_2)
@@ -636,7 +636,7 @@ async def test_nft_mint_from_did_multiple_xch(self_hostname: str, two_wallet_nod
     await time_out_assert(30, nft_count, mint_total, nft_wallet_taker)
     await time_out_assert(30, nft_count, 0, nft_wallet_maker)
 
-    # confirm that the spend uses the right amount of xch
+    # confirm that the spend uses the right amount of kop
     expected_xch_bal = funds - fee - mint_total - 1
     await time_out_assert(30, wallet_maker.get_confirmed_balance, expected_xch_bal)
 
@@ -874,8 +874,8 @@ async def test_nft_mint_from_xch_rpc(two_wallet_nodes: Any, trusted: Any, self_h
             }
             for i in range(n)
         ]
-        target_list = [encode_puzzle_hash((ph_taker), "xch") for x in range(n)]
-        royalty_address = encode_puzzle_hash(bytes32(token_bytes(32)), "xch")
+        target_list = [encode_puzzle_hash((ph_taker), "kop") for x in range(n)]
+        royalty_address = encode_puzzle_hash(bytes32(token_bytes(32)), "kop")
         royalty_percentage = 300
         fee = 100
         required_amount = n + (fee * n)
@@ -1029,7 +1029,7 @@ async def test_nft_mint_from_xch_multiple_xch(self_hostname: str, two_wallet_nod
         {"program": metadata, "royalty_pc": royalty_pc, "royalty_ph": royalty_addr} for x in range(mint_total)
     ]
 
-    # Grab two coins for testing that we can create a bulk minting with more than 1 xch coin
+    # Grab two coins for testing that we can create a bulk minting with more than 1 kop coin
     xch_coins_1 = await wallet_maker.select_coins(amount=10000)
     xch_coins_2 = await wallet_maker.select_coins(amount=10000, exclude=xch_coins_1)
     xch_coins = xch_coins_1.union(xch_coins_2)
@@ -1053,6 +1053,6 @@ async def test_nft_mint_from_xch_multiple_xch(self_hostname: str, two_wallet_nod
     await time_out_assert(30, nft_count, mint_total, nft_wallet_taker)
     await time_out_assert(30, nft_count, 0, nft_wallet_maker)
 
-    # confirm that the spend uses the right amount of xch
+    # confirm that the spend uses the right amount of kop
     expected_xch_bal = funds - fee - mint_total - 1
     await time_out_assert(30, wallet_maker.get_confirmed_balance, expected_xch_bal)

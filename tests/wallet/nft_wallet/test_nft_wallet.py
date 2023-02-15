@@ -687,7 +687,7 @@ async def test_nft_with_did_wallet_creation(self_hostname: str, two_wallet_nodes
             "wallet_id": nft_wallet_0_id,
             "hash": "0xD4584AD463139FA8C0D9F68F4B59F185",
             "uris": ["https://www.chia.net/img/branding/chia-logo.svg"],
-            "target_address": encode_puzzle_hash(nft_ph, "txch"),
+            "target_address": encode_puzzle_hash(nft_ph, "tkop"),
         }
     )
     assert resp.get("success")
@@ -981,7 +981,7 @@ async def test_nft_transfer_nft_with_did(self_hostname: str, two_wallet_nodes: A
     resp = await api_0.nft_transfer_nft(
         dict(
             wallet_id=nft_wallet_0_id,
-            target_address=encode_puzzle_hash(ph1, "xch"),
+            target_address=encode_puzzle_hash(ph1, "kop"),
             nft_coin_id=coins[0].nft_coin_id.hex(),
             fee=fee,
         )
@@ -1331,7 +1331,7 @@ async def test_nft_bulk_transfer(two_wallet_nodes: Any, trusted: Any) -> None:
     api_1 = WalletRpcApi(wallet_node_1)
     ph = await wallet_0.get_new_puzzlehash()
     ph1 = await wallet_1.get_new_puzzlehash()
-    address = encode_puzzle_hash(ph1, AddressType.XCH.hrp(wallet_node_1.config))
+    address = encode_puzzle_hash(ph1, AddressType.KOP.hrp(wallet_node_1.config))
     if trusted:
         wallet_node_0.config["trusted_peers"] = {
             full_node_api.full_node.server.node_id.hex(): full_node_api.full_node.server.node_id.hex()

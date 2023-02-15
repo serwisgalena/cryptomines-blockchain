@@ -419,7 +419,7 @@ def build_parser(subparsers, root_path, option_list, name, plotter_desc):
 
 
 def call_plotters(root_path: Path, args):
-    # Add `plotters` section in CHIA_ROOT.
+    # Add `plotters` section in CRYPTOMINES_ROOT.
     chia_root_path = root_path
     root_path = get_plotters_root_path(root_path)
     if not root_path.is_dir():
@@ -430,16 +430,16 @@ def call_plotters(root_path: Path, args):
                 print(f"Exception deleting old root path: {type(e)} {e}.")
 
     if not os.path.exists(root_path):
-        print(f"Creating plotters folder within CHIA_ROOT: {root_path}")
+        print(f"Creating plotters folder within CRYPTOMINES_ROOT: {root_path}")
         try:
             os.mkdir(root_path)
         except Exception as e:
             print(f"Cannot create plotters root path {root_path} {type(e)} {e}.")
 
-    plotters = argparse.ArgumentParser("chia plotters", description="Available options.")
+    plotters = argparse.ArgumentParser("cryptomines plotters", description="Available options.")
     subparsers = plotters.add_subparsers(help="Available options", dest="plotter")
 
-    build_parser(subparsers, root_path, chia_plotter_options, "chiapos", "Create a plot with the default chia plotter")
+    build_parser(subparsers, root_path, chia_plotter_options, "chiapos", "Create a plot with the default cryptomines plotter")
     build_parser(subparsers, root_path, madmax_plotter_options, "madmax", "Create a plot with madMAx")
 
     bladebit_parser = subparsers.add_parser("bladebit", help="Create a plot with bladebit")
@@ -450,11 +450,11 @@ def call_plotters(root_path: Path, args):
     subparsers.add_parser("version", help="Show plotter versions")
 
     deprecation_warning = (
-        "[DEPRECATED] 'chia plotters install' is no longer available. Use install-plotter.sh/ps1 instead."
+        "[DEPRECATED] 'cryptomines plotters install' is no longer available. Use install-plotter.sh/ps1 instead."
     )
     subparsers.add_parser("install", help=deprecation_warning, add_help=False)
 
-    deprecation_warning_bb2 = "[DEPRECATED] 'chia plotters bladebit2' was integrated to 'chia plotters bladebit'"
+    deprecation_warning_bb2 = "[DEPRECATED] 'cryptomines plotters bladebit2' was integrated to 'cryptomines plotters bladebit'"
     subparsers.add_parser("bladebit2", help=deprecation_warning_bb2, add_help=False)
 
     known_args = plotters.parse_known_args(args)

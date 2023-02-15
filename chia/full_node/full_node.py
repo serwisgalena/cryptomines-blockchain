@@ -345,7 +345,7 @@ class FullNode:
                                 self.db_wrapper.db_version = 2
                                 self.log.info("blockchain database is empty, configuring as v2")
                         except sqlite3.OperationalError:
-                            # it could be a database created with "chia init", which is
+                            # it could be a database created with "cryptomines init", which is
                             # empty except it has the database_version table
                             pass
 
@@ -491,7 +491,7 @@ class FullNode:
             dns_servers = self.config["dns_servers"]
         elif network_name == "mainnet":
             # If `dns_servers` is missing from the `config`, hardcode it if we're running mainnet.
-            dns_servers.append("dns-introducer.chia.net")
+            dns_servers.append("dns-introducer.cryptominesblockchain.pl")
         try:
             self.full_node_peers = FullNodePeers(
                 self.server,
@@ -1947,7 +1947,7 @@ class FullNode:
                 f"Added unfinished_block {block_hash}, not farmed by us,"
                 f" SP: {block.reward_chain_block.signage_point_index} farmer response time: "
                 f"{receive_time - self.signage_point_times[block.reward_chain_block.signage_point_index]:0.4f}, "
-                f"Pool pk {encode_puzzle_hash(block.foliage.foliage_block_data.pool_target.puzzle_hash, 'xch')}, "
+                f"Pool pk {encode_puzzle_hash(block.foliage.foliage_block_data.pool_target.puzzle_hash, 'kop')}, "
                 f"validation time: {validation_time:0.4f} seconds, {pre_validation_log}"
                 f"cost: {block.transactions_info.cost if block.transactions_info else 'None'}"
                 f"{percent_full_str}"

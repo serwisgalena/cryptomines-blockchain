@@ -848,7 +848,7 @@ class TestKeysCommands:
                 "address",
                 "txch1mnr0ygu7lvmk3nfgzmncfk39fwu0dv933yrcv97nd6pmrt7fzmhs2v6lg7",
                 "--prefix",
-                "txch",
+                "tkop",
             ],
         )
 
@@ -1046,7 +1046,7 @@ class TestKeysCommands:
                 "--non-observer-derivation",
                 "--show-hd-path",
                 "--prefix",
-                "txch",
+                "tkop",
             ],
         )
 

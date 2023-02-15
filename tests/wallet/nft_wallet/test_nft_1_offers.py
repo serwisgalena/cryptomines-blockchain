@@ -157,7 +157,7 @@ async def test_nft_offer_sell_nft(
         wallet_node_taker.wallet_state_manager, wallet_taker, name="NFT WALLET TAKER"
     )
 
-    # maker create offer: NFT for xch
+    # maker create offer: NFT for kop
     trade_manager_maker = wallet_maker.wallet_state_manager.trade_manager
     trade_manager_taker = wallet_taker.wallet_state_manager.trade_manager
 
@@ -334,7 +334,7 @@ async def test_nft_offer_request_nft(
         wallet_node_maker.wallet_state_manager, wallet_maker, name="NFT WALLET MAKER"
     )
 
-    # maker create offer: NFT for xch
+    # maker create offer: NFT for kop
     trade_manager_maker = wallet_maker.wallet_state_manager.trade_manager
     trade_manager_taker = wallet_taker.wallet_state_manager.trade_manager
 
@@ -530,7 +530,7 @@ async def test_nft_offer_sell_did_to_did(
         wallet_node_taker.wallet_state_manager, wallet_taker, name="NFT WALLET TAKER", did_id=did_id_taker
     )
 
-    # maker create offer: NFT for xch
+    # maker create offer: NFT for kop
     trade_manager_maker = wallet_maker.wallet_state_manager.trade_manager
     trade_manager_taker = wallet_taker.wallet_state_manager.trade_manager
 
@@ -707,7 +707,7 @@ async def test_nft_offer_sell_nft_for_cat(
         wallet_node_taker.wallet_state_manager, wallet_taker, name="NFT WALLET TAKER"
     )
 
-    # maker create offer: NFT for xch
+    # maker create offer: NFT for kop
     trade_manager_maker = wallet_maker.wallet_state_manager.trade_manager
     trade_manager_taker = wallet_taker.wallet_state_manager.trade_manager
 
@@ -1115,7 +1115,7 @@ async def test_nft_offer_sell_cancel(self_hostname: str, two_wallet_nodes: Any, 
 
     await time_out_assert(20, get_nft_count, 1, nft_wallet_maker)
 
-    # maker create offer: NFT for xch
+    # maker create offer: NFT for kop
     trade_manager_maker = wallet_maker.wallet_state_manager.trade_manager
 
     coins_maker = await nft_wallet_maker.get_current_nfts()
@@ -1232,7 +1232,7 @@ async def test_nft_offer_sell_cancel_in_batch(self_hostname: str, two_wallet_nod
 
     await time_out_assert(10, get_nft_count, 1, nft_wallet_maker)
 
-    # maker create offer: NFT for xch
+    # maker create offer: NFT for kop
     trade_manager_maker = wallet_maker.wallet_state_manager.trade_manager
 
     coins_maker = await nft_wallet_maker.get_current_nfts()
@@ -1280,7 +1280,7 @@ async def test_complex_nft_offer(
     self_hostname: str, two_wallet_nodes: Any, trusted: Any, forwards_compat: bool
 ) -> None:
     """
-    This test is going to create an offer where the maker offers 1 NFT and 1 CAT for 2 NFTs, an XCH and a CAT
+    This test is going to create an offer where the maker offers 1 NFT and 1 CAT for 2 NFTs, an KOP and a CAT
     """
     full_nodes, wallets, _ = two_wallet_nodes
     full_node_api: FullNodeSimulator = full_nodes[0]

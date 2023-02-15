@@ -4,26 +4,26 @@ from typing import Generator, KeysView
 
 SERVICES_FOR_GROUP = {
     "all": (
-        "chia_harvester chia_timelord_launcher chia_timelord chia_farmer "
-        "chia_full_node chia_wallet chia_data_layer chia_data_layer_http"
+        "cryptomines_harvester cryptomines_timelord_launcher cryptomines_timelord cryptomines_farmer "
+        "cryptomines_full_node cryptomines_wallet cryptomines_data_layer cryptomines_data_layer_http"
     ).split(),
     # TODO: should this be `data_layer`?
-    "data": "chia_wallet chia_data_layer".split(),
-    "data_layer_http": "chia_data_layer_http".split(),
-    "node": "chia_full_node".split(),
-    "harvester": "chia_harvester".split(),
-    "farmer": "chia_harvester chia_farmer chia_full_node chia_wallet".split(),
-    "farmer-no-wallet": "chia_harvester chia_farmer chia_full_node".split(),
-    "farmer-only": "chia_farmer".split(),
-    "timelord": "chia_timelord_launcher chia_timelord chia_full_node".split(),
-    "timelord-only": "chia_timelord".split(),
-    "timelord-launcher-only": "chia_timelord_launcher".split(),
-    "wallet": "chia_wallet".split(),
-    "introducer": "chia_introducer".split(),
-    "simulator": "chia_full_node_simulator".split(),
-    "crawler": "chia_crawler".split(),
-    "seeder": "chia_crawler chia_seeder".split(),
-    "seeder-only": "chia_seeder".split(),
+    "data": "cryptomines_wallet cryptomines_data_layer".split(),
+    "data_layer_http": "cryptomines_data_layer_http".split(),
+    "node": "cryptomines_full_node".split(),
+    "harvester": "cryptomines_harvester".split(),
+    "farmer": "cryptomines_harvester cryptomines_farmer cryptomines_full_node cryptomines_wallet".split(),
+    "farmer-no-wallet": "cryptomines_harvester cryptomines_farmer cryptomines_full_node".split(),
+    "farmer-only": "cryptomines_farmer".split(),
+    "timelord": "cryptomines_timelord_launcher cryptomines_timelord cryptomines_full_node".split(),
+    "timelord-only": "cryptomines_timelord".split(),
+    "timelord-launcher-only": "cryptomines_timelord_launcher".split(),
+    "wallet": "cryptomines_wallet".split(),
+    "introducer": "cryptomines_introducer".split(),
+    "simulator": "cryptomines_full_node_simulator".split(),
+    "crawler": "cryptomines_crawler".split(),
+    "seeder": "cryptomines_crawler cryptomines_seeder".split(),
+    "seeder-only": "cryptomines_seeder".split(),
 }
 
 
