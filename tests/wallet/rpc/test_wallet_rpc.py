@@ -1138,11 +1138,11 @@ async def test_key_and_address_endpoints(wallet_rpc_environment: WalletRpcTestEn
     sk = await wallet_node.get_key_for_fingerprint(pks[0])
     test_ph = create_puzzlehash_for_pk(master_sk_to_wallet_sk(sk, uint32(0)).get_g1())
     with lock_and_load_config(wallet_node.root_path, "config.yaml") as test_config:
-        test_config["farmer"]["xch_target_address"] = encode_puzzle_hash(test_ph, "tkop")
+        test_config["farmer"]["kop_target_address"] = encode_puzzle_hash(test_ph, "tkop")
         # set pool to second private key
         sk = await wallet_node.get_key_for_fingerprint(pks[1])
         test_ph = create_puzzlehash_for_pk(master_sk_to_wallet_sk(sk, uint32(0)).get_g1())
-        test_config["pool"]["xch_target_address"] = encode_puzzle_hash(test_ph, "tkop")
+        test_config["pool"]["kop_target_address"] = encode_puzzle_hash(test_ph, "tkop")
         save_config(wallet_node.root_path, "config.yaml", test_config)
 
     # Check first key
@@ -1168,11 +1168,11 @@ async def test_key_and_address_endpoints(wallet_rpc_environment: WalletRpcTestEn
     sk = await wallet_node.get_key_for_fingerprint(pks[0])
     test_ph = create_puzzlehash_for_pk(master_sk_to_wallet_sk_unhardened(sk, uint32(0)).get_g1())
     with lock_and_load_config(wallet_node.root_path, "config.yaml") as test_config:
-        test_config["farmer"]["xch_target_address"] = encode_puzzle_hash(test_ph, "tkop")
+        test_config["farmer"]["kop_target_address"] = encode_puzzle_hash(test_ph, "tkop")
         # set pool to second private key
         sk = await wallet_node.get_key_for_fingerprint(pks[1])
         test_ph = create_puzzlehash_for_pk(master_sk_to_wallet_sk_unhardened(sk, uint32(0)).get_g1())
-        test_config["pool"]["xch_target_address"] = encode_puzzle_hash(test_ph, "tkop")
+        test_config["pool"]["kop_target_address"] = encode_puzzle_hash(test_ph, "tkop")
         save_config(wallet_node.root_path, "config.yaml", test_config)
 
     # Check first key

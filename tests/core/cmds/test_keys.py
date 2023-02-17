@@ -58,7 +58,7 @@ class TestKeysCommands:
     def test_generate_with_new_config(self, tmp_path, empty_keyring):
         """
         Generate a new config and a new key. Verify that the config has
-        the correct xch_target_address entries.
+        the correct kop_target_address entries.
         """
 
         keychain = empty_keyring
@@ -91,19 +91,19 @@ class TestKeysCommands:
         assert result.exit_code == 0
         assert len(keychain.get_all_private_keys()) == 1
 
-        # Verify that the config has the correct xch_target_address entries
-        address_matches = re.findall(r"xch1[^\n]+", result.output)
+        # Verify that the config has the correct kop_target_address entries
+        address_matches = re.findall(r"kop1[^\n]+", result.output)
         assert len(address_matches) > 1
         address = address_matches[0]
 
         config: Dict = load_config(tmp_path, "config.yaml")
-        assert config["farmer"]["xch_target_address"] == address
-        assert config["pool"]["xch_target_address"] == address
+        assert config["farmer"]["kop_target_address"] == address
+        assert config["pool"]["kop_target_address"] == address
 
     def test_generate_with_existing_config(self, tmp_path, empty_keyring):
         """
         Generate a new key using an existing config. Verify that the config has
-        the original xch_target_address entries.
+        the original kop_target_address entries.
         """
 
         keychain = empty_keyring
@@ -136,14 +136,14 @@ class TestKeysCommands:
         assert generate_result.exit_code == 0
         assert len(keychain.get_all_private_keys()) == 1
 
-        # Verify that the config has the correct xch_target_address entries
-        address_matches = re.findall(r"xch1[^\n]+", generate_result.output)
+        # Verify that the config has the correct kop_target_address entries
+        address_matches = re.findall(r"kop1[^\n]+", generate_result.output)
         assert len(address_matches) > 1
         address = address_matches[0]
 
         existing_config: Dict = load_config(tmp_path, "config.yaml")
-        assert existing_config["farmer"]["xch_target_address"] == address
-        assert existing_config["pool"]["xch_target_address"] == address
+        assert existing_config["farmer"]["kop_target_address"] == address
+        assert existing_config["pool"]["kop_target_address"] == address
 
         # Generate the second key
         runner = CliRunner()
@@ -163,10 +163,10 @@ class TestKeysCommands:
         assert result.exit_code == 0
         assert len(keychain.get_all_private_keys()) == 2
 
-        # Verify that the config's xch_target_address entries have not changed
+        # Verify that the config's kop_target_address entries have not changed
         config: Dict = load_config(tmp_path, "config.yaml")
-        assert config["farmer"]["xch_target_address"] == existing_config["farmer"]["xch_target_address"]
-        assert config["pool"]["xch_target_address"] == existing_config["pool"]["xch_target_address"]
+        assert config["farmer"]["kop_target_address"] == existing_config["farmer"]["kop_target_address"]
+        assert config["pool"]["kop_target_address"] == existing_config["pool"]["kop_target_address"]
 
     @pytest.mark.parametrize(
         "cmd_params, label, input_str",
