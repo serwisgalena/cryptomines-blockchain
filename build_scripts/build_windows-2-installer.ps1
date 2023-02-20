@@ -21,7 +21,7 @@ $SPEC_FILE = (python -c 'import chia; print(chia.PYINSTALLER_SPEC_PATH)') -join 
 pyinstaller --log-level INFO $SPEC_FILE
 
 Write-Output "   ---"
-Write-Output "Copy Cryptomines executables to cryptomines-blockchain-gui\"
+Write-Output "Copy cryptomines executables to cryptomines-blockchain-gui\"
 Write-Output "   ---"
 Copy-Item "dist\daemon" -Destination "..\cryptomines-blockchain-gui\packages\gui\" -Recurse
 
