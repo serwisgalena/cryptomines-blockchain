@@ -15,7 +15,7 @@ Write-Output "Cryptomines Version is: $env:CRYPTOMINES_INSTALLER_VERSION"
 Write-Output "   ---"
 
 Write-Output "   ---"
-Write-Output "Use pyinstaller to create Cryptomines .exe's"
+Write-Output "Use pyinstaller to create cryptomines .exe's"
 Write-Output "   ---"
 $SPEC_FILE = (python -c 'import chia; print(chia.PYINSTALLER_SPEC_PATH)') -join "`n"
 pyinstaller --log-level INFO $SPEC_FILE
