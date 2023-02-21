@@ -254,7 +254,7 @@ jobs:
       env:
         CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
       run: |
-         certutil.exe -hashfile ${{ github.workspace }}\cryptomines-blockchain-gui\release-builds\windows-installer\-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}.exe SHA256 > ${{ github.workspace }}\cryptomines-blockchain-gui\release-builds\windows-installer\-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}.exe.sha256
+         certutil.exe -hashfile ${{ github.workspace }}\cryptomines-blockchain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}.exe SHA256 > ${{ github.workspace }}\cryptomines-blockchain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}.exe.sha256
          ls ${{ github.workspace }}\cryptomines-blockchain-gui\release-builds\windows-installer\
 
     - name: Upload release artifacts
@@ -263,7 +263,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
       run: |
-        gh release upload $env:RELEASE_TAG ${{ github.workspace }}\cryptomines-blockchain-gui\release-builds\windows-installer\-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}.exe
+        gh release upload $env:RELEASE_TAG ${{ github.workspace }}\cryptomines-blockchain-gui\release-builds\windows-installer\CryptominesSetup-${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}.exe
 
     - name: Mark installer complete
       if: steps.check_secrets.outputs.HAS_GLUE_SECRET && env.FULL_RELEASE == 'true'
