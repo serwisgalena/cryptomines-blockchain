@@ -1357,7 +1357,7 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 ### Changed
 
 - Weight proof request timeout was increased to 180 seconds.
-- Mainnet uses port 8444 and other constants and service names were changed for mainnet.
+- Mainnet uses port 44411 and other constants and service names were changed for mainnet.
 - GUI locales are now extracted and compiled in `npm run build`.
 - Daemon now logs to STDERR also.
 
