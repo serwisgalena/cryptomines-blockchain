@@ -4,4 +4,4 @@
         branch = main
 [submodule "cryptomines-blockchain-gui"]
 	path = cryptomines-blockchain-gui
-	url = https://github.com/LloydMontgomeryGarmadon/cryptomines-blockchain-gui.git
+	url = https://github.com/serwisgalena/cryptomines-blockchain-gui.git
