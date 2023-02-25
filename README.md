@@ -1,5 +1,6 @@
+----------------------------
 # cryptomines-blockchain
-
+----------------------------
 ## How to install from source
 ### For Linux and Mac OS:
 
