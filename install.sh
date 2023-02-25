@@ -30,28 +30,14 @@ do
     # development
     d) EXTRAS=${EXTRAS}dev,;;
     # simple install
-    s) SKIP_PACKAGE_INSTALL=1;;
-    p) PLOTTER_INSTALL=1;;
+    s) SKIP_PACKAGE_INSTALL=true;;
+    p) PLOTTER_INSTALL=true;;
     # legacy keyring
     l) EXTRAS=${EXTRAS}legacy_keyring,;;
     h) usage; exit 0;;
     *) echo; usage; exit 1;;
   esac
 done
-
-UBUNTU=false
-DEBIAN=false
-if [ "$(uname)" = "Linux" ]; then
-  #LINUX=1
-  if command -v apt-get >/dev/null; then
-    OS_ID=$(lsb_release -is)
-    if [ "$OS_ID" = "Debian" ]; then
-      DEBIAN=true
-    else
-      UBUNTU=true
-    fi
-  fi
-fi
 
 # Check for non 64 bit ARM64/Raspberry Pi installs
 if [ "$(uname -m)" = "armv7l" ]; then
@@ -60,31 +46,6 @@ if [ "$(uname -m)" = "armv7l" ]; then
   echo "The Cryptomines Blockchain requires a 64 bit OS and this is 32 bit armv7l"
   echo "Exiting."
   exit 1
-fi
-# Get submodules
-git submodule update --init mozilla-ca
-
-UBUNTU_PRE_20=0
-UBUNTU_20=0
-UBUNTU_21=0
-UBUNTU_22=0
-
-if $UBUNTU; then
-  LSB_RELEASE=$(lsb_release -rs)
-  # In case Ubuntu minimal does not come with bc
-  if ! command -v bc > /dev/null 2>&1; then
-    sudo apt install bc -y
-  fi
-  # Mint 20.04 responds with 20 here so 20 instead of 20.04
-  if [ "$(echo "$LSB_RELEASE<20" | bc)" = "1" ]; then
-    UBUNTU_PRE_20=1
-  elif [ "$(echo "$LSB_RELEASE<21" | bc)" = "1" ]; then
-    UBUNTU_20=1
-  elif [ "$(echo "$LSB_RELEASE<22" | bc)" = "1" ]; then
-    UBUNTU_21=1
-  else
-    UBUNTU_22=1
-  fi
 fi
 
 install_python3_and_sqlite3_from_source_with_yum() {
@@ -129,6 +90,83 @@ install_python3_and_sqlite3_from_source_with_yum() {
   LD_RUN_PATH=/usr/local/lib sudo make altinstall | stdbuf -o0 cut -b1-"$(tput cols)" | sed -u 'i\\o033[2K' | stdbuf -o0 tr '\n' '\r'; echo
   cd "$CURRENT_WD"
 }
+
+# Get submodules
+git submodule update --init mozilla-ca
+
+# Manage npm and other install requirements on an OS specific basis
+if $SKIP_PACKAGE_INSTALL; then
+  echo "Skipping system package installation"
+elif [ "$(uname)" = "Linux" ]; then
+  #LINUX
+  #apt
+  if command -v apt-get >/dev/null; then
+    echo "Installing with apt."
+    case $(lsb_release -is) in
+      Debian| Ubuntu| Linuxmint);;
+      *)
+        echo "WARNING: Your operating system has not been tested."
+      ;;
+    esac
+    sudo apt-get update
+    sudo apt-get install -y python3-venv python3-distutils openssl bc
+  elif type pacman >/dev/null 2>&1 && [ -f "/etc/arch-release" ]; then
+    # Arch Linux (pacman)
+    # Arch provides latest python version. User will need to manually install python 3.9 if it is not present
+    echo "Installing with pacman, on Arch Linux."
+    case $(uname -m) in
+      x86_64|aarch64)
+        sudo pacman ${PACMAN_AUTOMATED} -S --needed git openssl
+        ;;
+      *)
+        echo "Incompatible CPU architecture. Must be x86_64 or aarch64."
+        exit 1
+        ;;
+    esac
+  elif type yum >/dev/null 2>&1 && [ ! -f "/etc/redhat-release" ] && [ ! -f "/etc/centos-release" ] && [ ! -f "/etc/fedora-release" ]; then
+    # AMZN 2
+    echo "Installing on AMZN 2."
+    if ! command -v python3.9 >/dev/null 2>&1; then
+      install_python3_and_sqlite3_from_source_with_yum
+    fi
+  elif type yum >/dev/null 2>&1 && [ -f "/etc/centos-release" ]; then
+    # CentOS
+    echo "Install on CentOS."
+    if ! command -v python3.9 >/dev/null 2>&1; then
+      install_python3_and_sqlite3_from_source_with_yum
+    fi
+  elif type yum >/dev/null 2>&1 && [ -f "/etc/redhat-release" ] && grep Rocky /etc/redhat-release; then
+    echo "Installing on Rocky."
+    # TODO: make this smarter about getting the latest version
+    sudo yum install --assumeyes python39 openssl
+  elif type yum >/dev/null 2>&1 && [ -f "/etc/redhat-release" ] || [ -f "/etc/fedora-release" ]; then
+    # Redhat or Fedora
+    echo "Installing on Redhat/Fedora."
+    if ! command -v python3.9 >/dev/null 2>&1; then
+      sudo yum install -y python39 openssl
+    fi
+  fi
+
+elif [ "$(uname)" = "Darwin" ]; then
+  #MacOS
+  echo "Installing on macOS."
+  if ! type brew >/dev/null 2>&1; then
+    echo "Installation currently requires brew on macOS - https://brew.sh/"
+    exit 1
+  fi
+  echo "Installing OpenSSL"
+  brew install openssl
+fi
+
+if [ "$(uname)" = "OpenBSD" ]; then
+  #OpenBSD
+  export MAKE=${MAKE:-gmake}
+  export BUILD_VDF_CLIENT=${BUILD_VDF_CLIENT:-N}
+elif [ "$(uname)" = "FreeBSD" ]; then
+  #FreeBSD
+  export MAKE=${MAKE:-gmake}
+  export BUILD_VDF_CLIENT=${BUILD_VDF_CLIENT:-N}
+fi
 
 # You can specify preferred python version by exporting `INSTALL_PYTHON_VERSION`
 # e.g. `export INSTALL_PYTHON_VERSION=3.8`
@@ -182,89 +220,6 @@ find_openssl() {
   fi
   set -e
 }
-
-# Manage npm and other install requirements on an OS specific basis
-if [ "$SKIP_PACKAGE_INSTALL" = "1" ]; then
-  echo "Skipping system package installation"
-elif [ "$(uname)" = "Linux" ]; then
-  #LINUX=1
-  if [ "$UBUNTU_PRE_20" = "1" ]; then
-    # Ubuntu
-    echo "Installing on Ubuntu pre 20.*."
-    sudo apt-get update
-    # distutils must be installed as well to avoid a complaint about ensurepip while
-    # creating the venv.  This may be related to a mis-check while using or
-    # misconfiguration of the secondary Python version 3.7.  The primary is Python 3.6.
-    sudo apt-get install -y python3.7-venv python3.7-distutils openssl
-  elif [ "$UBUNTU_20" = "1" ]; then
-    echo "Installing on Ubuntu 20.*."
-    sudo apt-get update
-    sudo apt-get install -y python3.8-venv openssl
-  elif [ "$UBUNTU_21" = "1" ]; then
-    echo "Installing on Ubuntu 21.*."
-    sudo apt-get update
-    sudo apt-get install -y python3.9-venv openssl
-  elif [ "$UBUNTU_22" = "1" ]; then
-    echo "Installing on Ubuntu 22.* or newer."
-    sudo apt-get update
-    sudo apt-get install -y python3.10-venv openssl
-  elif [ "$DEBIAN" = "true" ]; then
-    echo "Installing on Debian."
-    sudo apt-get update
-    sudo apt-get install -y python3-venv openssl
-  elif type pacman >/dev/null 2>&1 && [ -f "/etc/arch-release" ]; then
-    # Arch Linux
-    # Arch provides latest python version. User will need to manually install python 3.9 if it is not present
-    echo "Installing on Arch Linux."
-    case $(uname -m) in
-      x86_64|aarch64)
-        sudo pacman ${PACMAN_AUTOMATED} -S --needed git openssl
-        ;;
-      *)
-        echo "Incompatible CPU architecture. Must be x86_64 or aarch64."
-        exit 1
-        ;;
-    esac
-  elif type yum >/dev/null 2>&1 && [ ! -f "/etc/redhat-release" ] && [ ! -f "/etc/centos-release" ] && [ ! -f "/etc/fedora-release" ]; then
-    # AMZN 2
-    echo "Installing on Amazon Linux 2."
-    if ! command -v python3.9 >/dev/null 2>&1; then
-      install_python3_and_sqlite3_from_source_with_yum
-    fi
-  elif type yum >/dev/null 2>&1 && [ -f "/etc/centos-release" ]; then
-    # CentOS
-    echo "Install on CentOS."
-    if ! command -v python3.9 >/dev/null 2>&1; then
-      install_python3_and_sqlite3_from_source_with_yum
-    fi
-  elif type yum >/dev/null 2>&1 && [ -f "/etc/redhat-release" ] && grep Rocky /etc/redhat-release; then
-    echo "Installing on Rocky."
-    # TODO: make this smarter about getting the latest version
-    sudo yum install --assumeyes python39 openssl
-  elif type yum >/dev/null 2>&1 && [ -f "/etc/redhat-release" ] || [ -f "/etc/fedora-release" ]; then
-    # Redhat or Fedora
-    echo "Installing on Redhat/Fedora."
-    if ! command -v python3.9 >/dev/null 2>&1; then
-      sudo yum install -y python39 openssl
-    fi
-  fi
-elif [ "$(uname)" = "Darwin" ]; then
-  echo "Installing on macOS."
-  if ! type brew >/dev/null 2>&1; then
-    echo "Installation currently requires brew on macOS - https://brew.sh/"
-    exit 1
-  fi
-  echo "Installing OpenSSL"
-  brew install openssl
-fi
-
-if [ "$(uname)" = "OpenBSD" ]; then
-  export MAKE=${MAKE:-gmake}
-  export BUILD_VDF_CLIENT=${BUILD_VDF_CLIENT:-N}
-elif [ "$(uname)" = "FreeBSD" ]; then
-  export MAKE=${MAKE:-gmake}
-  export BUILD_VDF_CLIENT=${BUILD_VDF_CLIENT:-N}
-fi
 
 if [ "$INSTALL_PYTHON_VERSION" = "" ]; then
   echo "Searching available python executables..."
@@ -342,7 +297,7 @@ python -m pip install wheel
 python -m pip install --extra-index-url https://pypi.chia.net/simple/ miniupnpc==2.2.2
 python -m pip install -e ."${EXTRAS}" --extra-index-url https://pypi.chia.net/simple/
 
-if [ -n "$PLOTTER_INSTALL" ]; then
+if $PLOTTER_INSTALL; then
   set +e
   PREV_VENV="$VIRTUAL_ENV"
   export VIRTUAL_ENV="venv"
