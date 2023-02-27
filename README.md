@@ -16,7 +16,7 @@
 
         cd cryptomines-blockchain
 
-4. Give executable permision to "./install.sh" and (If you want, install GUI for this blockchain) "./install-gui.sh".
+4. Give executable permision to "./install.sh" and if you want to install GUI for this blockchain "./install-gui.sh".
 
         chmod +x ./install.sh
         chmod +x ./install-gui.sh
