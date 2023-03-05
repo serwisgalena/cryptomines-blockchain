@@ -155,7 +155,7 @@ for setuptools_scm/PEP 440 reasons.
 - Dnslib updated to 0.9.22
 - Zstd updated to 1.5.2.6
 - Updated various DataLayer CLI commands to accept root hash parameter
-- Pool config is updated after the wallet is fully synced (#12631)
+- Pool config is updated after the wallet is fully synced
 - Prior to adding DID coins, ensure coin is valid
 - Adding submodule branch override to Install-gui.ps1
 - Reverted `change` to `change OR REPLACE -> OR FAIL` in `wallet_coin_store`
@@ -336,7 +336,6 @@ for setuptools_scm/PEP 440 reasons.
 - Cmds: Adjust stop daemon output
 - Remove unused functions on MerkleSet
 - Optimize `hash_coin_list()`
-- Update CONTRIBUTING.md
 - Remove outdated 3.8 upgrade comment
 - Hint refactor
 - Replace MerkleSet with the rust implementation
@@ -381,9 +380,9 @@ for setuptools_scm/PEP 440 reasons.
 - Fixed a missing state_changed GUI notification
 - Minor sync optimizations and refactor; eliminate redundant weight proof requests
 - Upped the number of file handles for madmax
-- Catch exceptions raised when resolving plot directories (fix #13723)
-- Call close callback for already closed connections (fix #9172)
-- Set GUI binary name to `cryptomines-blockchain` in the Fedora rpm and Ubuntu deb (fix #13847)
+- Catch exceptions raised when resolving plot directories
+- Call close callback for already closed connections
+- Set GUI binary name to `cryptomines-blockchain` in the Fedora rpm and Ubuntu deb
 - Add simple fix to set farmer response timer for `SP: 0`
 - Preserve correct `MempoolItem` block height when rebuilding mempool
 - Windows: start daemon without a window and detached from current console
@@ -391,13 +390,13 @@ for setuptools_scm/PEP 440 reasons.
 - Remove duplicate nft wallet deletion in reorg
 - Fix DID unnecessary wallet deletion
 - Improve performance of wallets with many NFTs
-- Stop creating unecessary index in notification store (fix #13955)
-- Fix issues in switching pools introduced in 1.6.0 (fix #13872)
+- Stop creating unecessary index in notification store
+- Fix issues in switching pools introduced in 1.6.0
 - Handle incoming unknown capabilities
 - GUI Offer Builder displays totals with royalties when requesting an NFT
 - Fixed NFT inbox detection
 - Convert and cache NFT metadata as UTF-8
-- Fixed issue with switching between farmer and wallet modes (GUI issue #1005)
+- Fixed issue with switching between farmer and wallet modes
 - Improve error message when sending more mojos than Spendable Balance
 - Fixed a few instances of coin name logging
 - Fixed cryptomines farm summary if using a remote full node
@@ -412,7 +411,7 @@ for setuptools_scm/PEP 440 reasons.
 - Fixed a crash that happens when plot directory config is empty
 - Set log levels per handler / Fix the log level in beta mode
 - Minimal fixup for daemon signal handling regression
-- Fixed CAT offer aggregation edge case (#13464)
+- Fixed CAT offer aggregation edge case
 - Fixed memos & minter DID
 - Fixed logo URL in readme.md
 - Fixed typo in wallet code `puzlle` -> `puzzle`
@@ -421,23 +420,22 @@ for setuptools_scm/PEP 440 reasons.
 - Improve handling of not synced peers
 - Sped up creation of puzzle hashes in the wallet
 - Replaced several handled tracebacks with standard log messages
-- Show Usage when running `cryptomines plotters` (#13690)
+- Show Usage when running `cryptomines plotters`
 - Fixed marking the successfully added spend bundles to the reinitialized mempool when a new peak is available
 - Fixed errors output when stopping the daemon on CLI
-- Fixed incompatibility with Python 3.10.8 around accessing the `_waiters` private attribute of asyncio Semaphore class (#13636)
-- Fixed DataLayer issues with subscribing after unsubscribing to the same store/singleton (#13589)
+- Fixed incompatibility with Python 3.10.8 around accessing the `_waiters` private attribute of asyncio Semaphore class
+- Fixed DataLayer issues with subscribing after unsubscribing to the same store/singleton
 - Report to GUI when DID wallet is created
 - Check if offer file is present before trying to take offer
 - Properly catch and handle errors during shutdown while syncing
-- Fixed proof lookup and plot caching with bladebit plots that have dropped entries (#13084)
+- Fixed proof lookup and plot caching with bladebit plots that have dropped entries
 - Fixed issues with accepting Datalayer offers where the offer inclusions has matching key/value data for both maker and taker inclusions
 - Fixed issues where ChiaLisp was compiled during import requiring write access to the directory
 - Removed tracking of dropped transactions `dropped_tx`
 - Fixed a breaking change in `get_puzzle_and_solution` RPC
 - Fixed missing wallet `state_changed` events for GUI
 - Fixed several bugs related to wallet sync status
-- Fixed GUI issue for CAT offers where the CAT Tail would not show in the tooltip for `Unknown CAT`s (https://github.com/Cryptomines-Network/cryptomines-blockchain-gui/issues/950)
-- Log error for failed service start
+- Fixed GUI issue for CAT offers where the CAT Tail would not show in the tooltip for `Unknown CAT`s
 - Improve logging in `plot_sync.{receiver|delta}`
 - Fix default value assignments for `dataclass_from_dict` for streamable
 - Fix `change_payout_instructions` for invalid addresses
@@ -478,7 +476,7 @@ for setuptools_scm/PEP 440 reasons.
 - Fixed issues with harvesters not reconnecting properly - fixes #11466
 - Return not synced if there are no connections - fixes #12090
 - Fix issues with wallet resending transactions on various mempool and node errors - fixes #10873
-- Fix some issues with `plotnft show` (#11897)
+- Fix some issues with `plotnft show`
 - Handle ephemeral ports and dual stack (ipv4 & ipv6)
 - Fix issues when wallet syncing and rolling back too far in the past
 - Fixes issues with the Farmer Reward dialog incorrectly reporting there is no private key (#11036)
@@ -519,7 +517,7 @@ for setuptools_scm/PEP 440 reasons.
 - Improved performance of `get_coin_records_by_names` by using proper index
 - Improved handling of unknown pending balances
 - Improved plot load times
-- In version 1.3.2 our patch for the OpenSSL vulnerability was not complete for the Windows installer. Thank you @xsmolasses of Core-Pool.
+- In version 1.3.2 our patch for the OpenSSL vulnerability was not complete for the Windows installer
 - MacOS would not update openssl when installing via `install.sh`
 - Some debugging information remained in `install.sh`
 - Fixed OpenSSL vulnerability CVE-2022-0778
@@ -534,7 +532,7 @@ for setuptools_scm/PEP 440 reasons.
 - Fixed display of harvesters status when harvesters are restarted (GUI).
 - Fixed wallet RPC `get_offers_count` returning an error when there are no trades
 - Fixed spelling of "genrated"
-- Fixed typo "log_maxbytessrotation" in initial-config (@skweee made their first contribution!)
+- Fixed typo "log_maxbytessrotation" in initial-config
 
 ## [Alpha 1.0] Cryptomines blockchain
 
