@@ -576,10 +576,10 @@ data_layer:
   # TODO: organize consistently with other sections
 
   # TODO: shouldn't we not need this since we have no actual public interface (yet)?
-  port: 8561
+  port: 44427
   wallet_peer:
     host: localhost
-    port: 9256
+    port: 44426
 
   database_path: "data_layer/db/data_layer_CHALLENGE.sqlite"
   # The location where the server files will be stored.
@@ -591,14 +591,14 @@ data_layer:
 
   # Data for running a data layer server.
   host_ip: 0.0.0.0
-  host_port: 8575
+  host_port: 44428
   # Data for running a data layer client.
   manage_data_interval: 60
   selected_network: *selected_network
   # If True, starts an RPC server at the following port
   start_rpc_server: True
   # TODO: what considerations are there in choosing this?
-  rpc_port: 8562
+  rpc_port: 44429
   rpc_server_max_request_body_size: 26214400
   fee: 1000000000
   logging: *logging
