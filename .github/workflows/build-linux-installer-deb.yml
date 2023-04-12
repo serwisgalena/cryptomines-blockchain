@@ -195,16 +195,6 @@ jobs:
         sha256sum $GITHUB_WORKSPACE/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_amd64.deb > $GITHUB_WORKSPACE/build_scripts/final_installer/cryptomines-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_amd64.deb.sha256
         ls $GITHUB_WORKSPACE/build_scripts/final_installer/
 
-    - name: Create .deb torrent
-      if: env.FULL_RELEASE == 'true'
-      env:
-        CRYPTOMINES_INSTALLER_VERSION: ${{ steps.version_number.outputs.CRYPTOMINES_INSTALLER_VERSION }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        py3createtorrent -f -t udp://tracker.opentrackr.org:1337/announce $GITHUB_WORKSPACE/build_scripts/final_installer/chia-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_amd64.deb -o $GITHUB_WORKSPACE/build_scripts/final_installer/chia-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_amd64.deb.torrent --webseed https://download.chia.net/install/chia-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_amd64.deb
-        py3createtorrent -f -t udp://tracker.opentrackr.org:1337/announce $GITHUB_WORKSPACE/build_scripts/final_installer/chia-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_amd64.deb -o $GITHUB_WORKSPACE/build_scripts/final_installer/chia-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_amd64.deb.torrent --webseed https://download.chia.net/install/chia-blockchain-cli_${CRYPTOMINES_INSTALLER_VERSION}-1_amd64.deb
-        gh release upload $RELEASE_TAG $GITHUB_WORKSPACE/build_scripts/final_installer/chia-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_amd64.deb.torrent
-
     - name: Upload release artifacts
       if: env.RELEASE == 'true'
       env:
