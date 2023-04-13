@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project does not yet adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 for setuptools_scm/PEP 440 reasons.
 
+## [Beta 1.1] Cryptomines blockchain
+
+### Fixed
+
+- Fixed some bugs that caused builds to fail
+
 ## [Beta 1.0] Cryptomines blockchain
 
 ### Added
