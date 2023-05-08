@@ -106,7 +106,7 @@ class WSChiaConnection:
     connection_type: Optional[NodeType] = None
     request_nonce: uint16 = uint16(0)
     peer_capabilities: List[Capability] = field(default_factory=list)
-    # Used by the Chia Seeder.
+    # Used by the Cryptomines Seeder.
     version: str = field(default_factory=str)
     protocol_version: str = field(default_factory=str)
 
@@ -648,7 +648,7 @@ class WSChiaConnection:
             await asyncio.sleep(3)
         return None
 
-    # Used by the Chia Seeder.
+    # Used by the Cryptomines Seeder.
     def get_version(self) -> str:
         return self.version
 

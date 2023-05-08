@@ -24,7 +24,7 @@ from chia.util.config import lock_and_load_config, save_config
 
 
 def print_restart_warning() -> None:
-    print("\nRestart the daemon and any running chia services for changes to take effect.")
+    print("\nRestart the daemon and any running cryptomines services for changes to take effect.")
 
 
 @click.group("beta", hidden=True)

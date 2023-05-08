@@ -44,7 +44,7 @@ try:
     from aiohttp import ClientSession, WSMsgType, web
     from aiohttp.web_ws import WebSocketResponse
 except ModuleNotFoundError:
-    print("Error: Make sure to run . ./activate from the project folder before starting Chia.")
+    print("Error: Make sure to run . ./activate from the project folder before starting Cryptomines.")
     quit()
 
 
@@ -166,7 +166,7 @@ class WebSocketServer:
             self.log.warning(
                 (
                     "Deprecation Warning: Your version of SSL (%s) does not support TLS1.3. "
-                    "A future version of Chia will require TLS1.3."
+                    "A future version of Cryptomines will require TLS1.3."
                 ),
                 ssl.OPENSSL_VERSION,
             )

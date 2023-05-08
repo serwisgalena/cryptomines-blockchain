@@ -31,11 +31,9 @@ def init_cmd(ctx: click.Context, create_certs: str, fix_ssl_permissions: bool, t
     \b
     Follow these steps to create new certificates for a remote harvester:
     - Make a copy of your Farming Machine CA directory: ~/.cryptomines/[version]/config/ssl/ca
-    - Shut down all chia daemon processes with `cryptomines stop all -d`
+    - Shut down all cryptomines daemon processes with `cryptomines stop all -d`
     - Run `cryptomines init -c [directory]` on your remote harvester,
       where [directory] is the the copy of your Farming Machine CA directory
-    - Get more details on remote harvester on Chia wiki:
-      https://github.com/Chia-Network/chia-blockchain/wiki/Farming-on-many-machines
     """
     from pathlib import Path
 

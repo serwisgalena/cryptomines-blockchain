@@ -126,7 +126,7 @@ async def async_combine(args: Dict[str, Any], wallet_client: WalletRpcClient, fi
     if not await wallet_client.get_synced():
         print("Wallet not synced. Please wait.")
         return
-    is_xch: bool = wallet_type == WalletType.STANDARD_WALLET  # this lets us know if we are directly combining Chia
+    is_xch: bool = wallet_type == WalletType.STANDARD_WALLET  # this lets us know if we are directly combining Cryptomines
     final_max_amount = uint64(int(max_amount * mojo_per_unit)) if not target_coin_ids else uint64(0)
     final_min_coin_amount: uint64 = uint64(int(min_coin_amount * mojo_per_unit))
     final_excluded_amounts: List[uint64] = [uint64(int(Decimal(amount) * mojo_per_unit)) for amount in excluded_amounts]
@@ -197,7 +197,7 @@ async def async_split(args: Dict[str, Any], wallet_client: WalletRpcClient, fing
     if not await wallet_client.get_synced():
         print("Wallet not synced. Please wait.")
         return
-    is_xch: bool = wallet_type == WalletType.STANDARD_WALLET  # this lets us know if we are directly spitting Chia
+    is_xch: bool = wallet_type == WalletType.STANDARD_WALLET  # this lets us know if we are directly spitting Cryptomines
     final_amount_per_coin = uint64(int(amount_per_coin * mojo_per_unit))
     total_amount = final_amount_per_coin * number_of_coins
     if is_xch:
