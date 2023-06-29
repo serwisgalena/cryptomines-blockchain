@@ -10,7 +10,7 @@ from chia.cmds.sim_funcs import async_config_wizard, farm_blocks, print_status, 
 from chia.util.default_root import SIMULATOR_ROOT_PATH
 
 
-@click.group("sim", help="Configure and make requests to a Cryptomies Simulator Full Node")
+@click.group("sim", help="Configure and make requests to a Cryptomines Simulator Full Node")
 @click.option(
     "-p",
     "--rpc-port",

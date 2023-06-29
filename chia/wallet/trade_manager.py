@@ -28,6 +28,7 @@ from chia.wallet.trading.offer import OFFER_MOD_OLD_HASH, NotarizedPayment, Offe
 from chia.wallet.trading.trade_status import TradeStatus
 from chia.wallet.trading.trade_store import TradeStore
 from chia.wallet.transaction_record import TransactionRecord
+from chia.wallet.util.query_filter import HashFilter
 from chia.wallet.util.transaction_type import TransactionType
 from chia.wallet.util.wallet_types import WalletType
 from chia.wallet.wallet import Wallet
@@ -138,8 +139,10 @@ class TradeManager:
         offer = Offer.from_bytes(trade.offer)
         primary_coin_ids = [c.name() for c in offer.removals()]
         # TODO: Add `WalletCoinStore.get_coins`.
-        our_coin_records = await self.wallet_state_manager.coin_store.get_coin_records(primary_coin_ids)
-        our_primary_coins: List[Coin] = [cr.coin for cr in our_coin_records.values()]
+        result = await self.wallet_state_manager.coin_store.get_coin_records(
+            coin_id_filter=HashFilter.include(primary_coin_ids)
+        )
+        our_primary_coins: List[Coin] = [cr.coin for cr in result.records]
         our_additions: List[Coin] = list(
             filter(lambda c: offer.get_root_removal(c) in our_primary_coins, offer.additions())
         )
@@ -194,7 +197,11 @@ class TradeManager:
         #  - The cast here is required for now because TradeManager.wallet_state_manager is hinted as Any.
         return cast(
             Dict[bytes32, WalletCoinRecord],
-            await self.wallet_state_manager.coin_store.get_coin_records(coins_of_interest),
+            (
+                await self.wallet_state_manager.coin_store.get_coin_records(
+                    coin_id_filter=HashFilter.include(coins_of_interest)
+                )
+            ).coin_id_to_record,
         )
 
     async def get_all_trades(self) -> List[TradeRecord]:
@@ -382,8 +389,18 @@ class TradeManager:
                 await self.trade_store.set_status(trade.trade_id, TradeStatus.CANCELLED)
         return all_txs
 
-    async def save_trade(self, trade: TradeRecord, offer_name: bytes32) -> None:
+    async def save_trade(self, trade: TradeRecord, offer: Offer) -> None:
+        offer_name: bytes32 = offer.name()
         await self.trade_store.add_trade_record(trade, offer_name)
+
+        # We want to subscribe to the coin IDs of all coins that are not the ephemeral offer coins
+        offered_coins: Set[Coin] = set([value for values in offer.get_offered_coins().values() for value in values])
+        non_offer_additions: Set[Coin] = set(offer.additions()) ^ offered_coins
+        non_offer_removals: Set[Coin] = set(offer.removals()) ^ offered_coins
+        await self.wallet_state_manager.add_interested_coin_ids(
+            [coin.name() for coin in (*non_offer_removals, *non_offer_additions)]
+        )
+
         self.wallet_state_manager.state_changed("offer_added")
 
     async def create_offer_for_ids(
@@ -431,7 +448,7 @@ class TradeManager:
         )
 
         if success is True and trade_offer is not None and not validate_only:
-            await self.save_trade(trade_offer, created_offer.name())
+            await self.save_trade(trade_offer, created_offer)
 
         return success, trade_offer, error
 
@@ -794,7 +811,7 @@ class TradeManager:
             sent_to=[],
         )
 
-        await self.save_trade(trade_record, offer.name())
+        await self.save_trade(trade_record, offer)
 
         # Dummy transaction for the sake of the wallet push
         push_tx = TransactionRecord(
@@ -806,8 +823,8 @@ class TradeManager:
             confirmed=False,
             sent=uint32(0),
             spend_bundle=final_spend_bundle,
-            additions=[],
-            removals=[],
+            additions=final_spend_bundle.additions(),
+            removals=final_spend_bundle.removals(),
             wallet_id=uint32(0),
             sent_to=[],
             trade_id=bytes32([1] * 32),

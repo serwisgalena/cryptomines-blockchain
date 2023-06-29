@@ -21,7 +21,7 @@ if [ ! "$CRYPTOMINES_INSTALLER_VERSION" ]; then
 	echo "WARNING: No environment variable CRYPTOMINES_INSTALLER_VERSION set. Using 0.0.0."
 	CRYPTOMINES_INSTALLER_VERSION="0.0.0"
 fi
-echo "cryptomines Installer Version is: $CRYPTOMINES_INSTALLER_VERSION"
+echo "Cryptomines Installer Version is: $CRYPTOMINES_INSTALLER_VERSION"
 
 echo "Installing npm and electron packagers"
 cd npm_linux || exit 1

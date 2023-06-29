@@ -110,7 +110,7 @@ def is_in_network(peer_host: str, networks: Iterable[Union[IPv4Network, IPv6Netw
 
 
 def is_localhost(peer_host: str) -> bool:
-        return peer_host in ["127.0.0.1", "localhost", "::1", "0:0:0:0:0:0:0:1"]
+    return peer_host in ["127.0.0.1", "localhost", "::1", "0:0:0:0:0:0:0:1"]
 
 
 def is_trusted_peer(host: str, node_id: bytes32, trusted_peers: Dict[str, Any], testing: bool = False) -> bool:

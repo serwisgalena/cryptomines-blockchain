@@ -59,7 +59,7 @@ async def get_plugin_info(url: str) -> Tuple[str, Dict[str, Any]]:
                 return url, ret
     except aiohttp.ClientError as e:
         return url, {"error": f"ClientError: {e}"}
-    
+
 
 class DataLayer:
     data_store: DataStore
@@ -438,7 +438,7 @@ class DataLayer:
                 except Exception as e:
                     self.log.error(f"get_downloader could not get response: {type(e).__name__}: {e}")
         return None
-    
+
     async def upload_files(self, tree_id: bytes32) -> None:
         uploaders = await self.get_uploaders(tree_id)
         singleton_record: Optional[SingletonRecord] = await self.wallet_rpc.dl_latest_singleton(tree_id, True)

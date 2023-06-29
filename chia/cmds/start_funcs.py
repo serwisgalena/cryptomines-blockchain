@@ -67,7 +67,7 @@ async def async_start(root_path: Path, config: Dict[str, Any], group: tuple[str,
         return None
 
     if daemon is None:
-        print("Failed to create the Cryptomines daemon")
+        print("Failed to create the cryptomines daemon")
         return None
 
     for service in services_for_groups(group):

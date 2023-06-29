@@ -83,7 +83,7 @@ class Params:
     nobitfield: bool
     stripe_size: int = 65536
 
-    
+
 def get_plot_directories(root_path: Path, config: Dict = None) -> List[str]:
     if config is None:
         config = load_config(root_path, "config.yaml")

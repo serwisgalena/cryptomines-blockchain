@@ -4,6 +4,7 @@ import zlib
 from typing import List
 
 from chia.types.blockchain_format.program import Program
+from chia.wallet.cat_wallet.cat_utils import CAT_MOD
 from chia.wallet.nft_wallet.nft_puzzles import (
     NFT_METADATA_UPDATER,
     NFT_OWNERSHIP_LAYER,
@@ -12,7 +13,6 @@ from chia.wallet.nft_wallet.nft_puzzles import (
     SINGLETON_TOP_LAYER_MOD,
 )
 from chia.wallet.puzzles import p2_delegated_puzzle_or_hidden_puzzle as standard_puzzle
-from chia.wallet.puzzles.cat_loader import CAT_MOD
 from chia.wallet.puzzles.load_clvm import load_clvm_maybe_recompile
 
 # Need the legacy CAT mod for zlib backwards compatibility
@@ -35,6 +35,7 @@ ZDICT = [
     + bytes(NFT_TRANSFER_PROGRAM_DEFAULT),
     bytes(CAT_MOD),
     bytes(OFFER_MOD),
+    b"",  # purposefully break compatibility with older versions
     # more dictionaries go here
 ]
 
@@ -63,7 +64,7 @@ def compress_with_zdict(blob: bytes, zdict: bytes) -> bytes:
 
 def decompress_with_zdict(blob: bytes, zdict: bytes) -> bytes:
     do = zlib.decompressobj(zdict=zdict)
-    return do.decompress(blob, max_length=6 * 1024 * 1024) # Limit output size
+    return do.decompress(blob, max_length=6 * 1024 * 1024)  # Limit output size
 
 
 def decompress_object_with_puzzles(compressed_object_blob: bytes) -> bytes:

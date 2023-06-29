@@ -203,11 +203,11 @@ def configure(
             change_made = True
 
         if change_made:
-            print("Restart any running Cryptomines services for changes to take effect")
+            print("Restart any running cryptomines services for changes to take effect")
             save_config(root_path, "config.yaml", config)
 
 
-@click.command("configure", short_help="Modify configuration", no_args_is_help=True)
+@click.command("configure", help="Modify configuration", no_args_is_help=True)
 @click.option(
     "--testnet",
     "-t",

@@ -40,7 +40,7 @@ def configure(ctx: click.Context, path: Optional[str], interval: Optional[int]) 
     root_path = ctx.obj["root_path"]
     with lock_and_load_config(root_path, "config.yaml") as config:
         if "beta" not in config:
-            raise click.ClickException("beta test mode is not enabled, enable it first with `chia beta enable`")
+            raise click.ClickException("beta test mode is not enabled, enable it first with `cryptomines beta enable`")
 
         # Adjust the path
         if path is None:

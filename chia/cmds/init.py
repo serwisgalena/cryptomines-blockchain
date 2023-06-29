@@ -3,7 +3,7 @@ from __future__ import annotations
 import click
 
 
-@click.command("init", short_help="Create or migrate the configuration")
+@click.command("init", help="Create or migrate the configuration")
 @click.option(
     "--create-certs",
     "-c",
@@ -16,7 +16,7 @@ import click
     is_flag=True,
     help="Attempt to fix SSL certificate/key file permissions",
 )
-@click.option("--testnet", is_flag=True, help="Configure this Cryptomines install to connect to the testnet")
+@click.option("--testnet", is_flag=True, help="Configure this cryptomines install to connect to the testnet")
 @click.option("--set-passphrase", "-s", is_flag=True, help="Protect your keyring with a passphrase")
 @click.option(
     "--v1-db",
@@ -41,6 +41,8 @@ def init_cmd(
     - Shut down all cryptomines daemon processes with `cryptomines stop all -d`
     - Run `cryptomines init -c [directory]` on your remote harvester,
       where [directory] is the the copy of your Farming Machine CA directory
+    - Get more details on remote harvester on Chia wiki:
+      https://github.com/Chia-Network/cryptomines-blockchain/wiki/Farming-on-many-machines
     """
     from pathlib import Path
 

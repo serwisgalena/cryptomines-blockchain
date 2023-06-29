@@ -111,7 +111,6 @@ class KeychainServer:
         and service strings are used to partition those data stores. We attempt to
         maintain a mapping of user/service pairs to their corresponding Keychain.
         """
-        keychain = None
         user = request.get("kc_user", self._default_keychain.user)
         service = request.get("kc_service", self._default_keychain.service)
         if user == self._default_keychain.user and service == self._default_keychain.service:

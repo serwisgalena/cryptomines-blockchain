@@ -39,8 +39,8 @@ class BlockRecordProtocol(Protocol):
     @property
     def is_transaction_block(self) -> bool:
         return self.timestamp is not None
-    
-    
+
+
 @streamable
 @dataclass(frozen=True)
 class BlockRecord(Streamable):

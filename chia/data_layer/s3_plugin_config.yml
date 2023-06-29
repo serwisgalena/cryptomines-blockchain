@@ -1,5 +1,4 @@
- # TODO: Check this: 
- instance-1:
+instance-1:
   log_filename: "s3_plugin.log"
   log_level: INFO
   server_files_location: "/Users/test/.chia/mainnet/data_layer/db/server_files_location_testnet10"

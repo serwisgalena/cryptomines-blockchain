@@ -127,19 +127,6 @@ jobs:
         echo "CRYPTOMINES_INSTALLER_VERSION=$CRYPTOMINES_INSTALLER_VERSION" >>$GITHUB_OUTPUT
         deactivate
 
-      # Get the most recent release from chia-plotter-madmax
-    - uses: actions/github-script@v6
-      id: 'latest-madmax'
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        result-encoding: string
-        script: |
-          const release = await github.rest.repos.getLatestRelease({
-            owner: 'Chia-Network',
-            repo: 'chia-plotter-madmax',
-          });
-          return release.data.tag_name;
-
     - name: Get latest madmax plotter
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

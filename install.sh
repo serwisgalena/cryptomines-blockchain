@@ -30,8 +30,8 @@ do
     # development
     d) EXTRAS=${EXTRAS}dev,;;
     # simple install
-    s) SKIP_PACKAGE_INSTALL=true;;
-    p) PLOTTER_INSTALL=true;;
+    s) SKIP_PACKAGE_INSTALL=1;;
+    p) PLOTTER_INSTALL=1;;
     # legacy keyring
     l) EXTRAS=${EXTRAS}legacy_keyring,;;
     h) usage; exit 0;;
@@ -39,12 +39,13 @@ do
   esac
 done
 
+
+
 # Check for non 64 bit ARM64/Raspberry Pi installs
 if [ "$(uname -m)" = "armv7l" ]; then
   echo ""
   echo "WARNING:"
-  echo "The Cryptomines Blockchain requires a 64 bit OS and this is 32 bit armv7l"
-  echo "Exiting."
+  echo "The  Cryptomines Blockchain requires a 64 bit OS and this is 32 bit armv7l"
   exit 1
 fi
 
@@ -91,29 +92,31 @@ install_python3_and_sqlite3_from_source_with_yum() {
   cd "$CURRENT_WD"
 }
 
+
+
 # Get submodules
 git submodule update --init mozilla-ca
 
 # Manage npm and other install requirements on an OS specific basis
-if $SKIP_PACKAGE_INSTALL; then
+if [ "$SKIP_PACKAGE_INSTALL" = "1" ]; then
   echo "Skipping system package installation"
 elif [ "$(uname)" = "Linux" ]; then
-  #LINUX
-  #apt
-  if command -v apt-get >/dev/null; then
-    echo "Installing with apt."
+  #LINUX=1
+  if type apt >/dev/null; then
+    #Debian or Ubuntu
+    echo "Installing on Debian or Ubuntu."
     case $(lsb_release -is) in
       Debian| Ubuntu| Linuxmint);;
       *)
         echo "WARNING: Your operating system has not been tested."
       ;;
     esac
-    sudo apt-get update
-    sudo apt-get install -y python3-venv python3-distutils openssl bc
+    sudo apt update
+    sudo apt install -y python3-venv python3-distutils openssl bc
   elif type pacman >/dev/null 2>&1 && [ -f "/etc/arch-release" ]; then
-    # Arch Linux (pacman)
+    # Arch Linux
     # Arch provides latest python version. User will need to manually install python 3.9 if it is not present
-    echo "Installing with pacman, on Arch Linux."
+    echo "Installing on Arch Linux."
     case $(uname -m) in
       x86_64|aarch64)
         sudo pacman ${PACMAN_AUTOMATED} -S --needed git openssl
@@ -125,7 +128,7 @@ elif [ "$(uname)" = "Linux" ]; then
     esac
   elif type yum >/dev/null 2>&1 && [ ! -f "/etc/redhat-release" ] && [ ! -f "/etc/centos-release" ] && [ ! -f "/etc/fedora-release" ]; then
     # AMZN 2
-    echo "Installing on AMZN 2."
+    echo "Installing on Amazon Linux 2."
     if ! command -v python3.9 >/dev/null 2>&1; then
       install_python3_and_sqlite3_from_source_with_yum
     fi
@@ -146,9 +149,7 @@ elif [ "$(uname)" = "Linux" ]; then
       sudo yum install -y python39 openssl
     fi
   fi
-
 elif [ "$(uname)" = "Darwin" ]; then
-  #MacOS
   echo "Installing on macOS."
   if ! type brew >/dev/null 2>&1; then
     echo "Installation currently requires brew on macOS - https://brew.sh/"
@@ -159,14 +160,14 @@ elif [ "$(uname)" = "Darwin" ]; then
 fi
 
 if [ "$(uname)" = "OpenBSD" ]; then
-  #OpenBSD
   export MAKE=${MAKE:-gmake}
   export BUILD_VDF_CLIENT=${BUILD_VDF_CLIENT:-N}
 elif [ "$(uname)" = "FreeBSD" ]; then
-  #FreeBSD
   export MAKE=${MAKE:-gmake}
   export BUILD_VDF_CLIENT=${BUILD_VDF_CLIENT:-N}
 fi
+
+
 
 # You can specify preferred python version by exporting `INSTALL_PYTHON_VERSION`
 # e.g. `export INSTALL_PYTHON_VERSION=3.8`
@@ -287,6 +288,8 @@ if [ -n "${EXTRAS}" ]; then
   EXTRAS=[${EXTRAS}]
 fi
 
+
+
 # shellcheck disable=SC1091
 . ./activate
 # pip 20.x+ supports Linux binary wheels
@@ -297,7 +300,7 @@ python -m pip install wheel
 python -m pip install --extra-index-url https://pypi.chia.net/simple/ miniupnpc==2.2.2
 python -m pip install -e ."${EXTRAS}" --extra-index-url https://pypi.chia.net/simple/
 
-if $PLOTTER_INSTALL; then
+if [ -n "$PLOTTER_INSTALL" ]; then
   set +e
   PREV_VENV="$VIRTUAL_ENV"
   export VIRTUAL_ENV="venv"

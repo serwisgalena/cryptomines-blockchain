@@ -54,7 +54,7 @@ def create_chia_directory(
     from chia.cmds.init_funcs import chia_init
 
     if not chia_root.is_dir() or not Path(chia_root / "config" / "config.yaml").exists():
-        # create chia directories & load config
+        # create cryptomines directories & load config
         chia_init(chia_root, testnet=True, fix_ssl_permissions=True)
         config: Dict[str, Any] = load_config(chia_root, "config.yaml")
         # apply standard block-tools config.
@@ -257,7 +257,6 @@ async def get_current_height(root_path: Path) -> int:
     async with get_any_service_client(SimulatorFullNodeRpcClient, root_path=root_path, consume_errors=False) as (
         node_client,
         _,
-        _,
     ):
         assert node_client is not None  # this cant be None, because we don't catch errors
         num_blocks = len(await node_client.get_all_blocks())
@@ -279,7 +278,7 @@ async def async_config_wizard(
     if fingerprint is None:
         # user cancelled wizard
         return
-    # create chia directory & get config.
+    # create cryptomines directory & get config.
     print("Creating cryptomines directory & config...")
     config = create_chia_directory(root_path, fingerprint, farming_address, plot_directory, auto_farm, docker_mode)
     # Pre-generate plots by running block_tools init functions.
@@ -393,11 +392,7 @@ async def print_status(
     from chia.cmds.show_funcs import print_blockchain_state
     from chia.cmds.units import units
 
-    async with get_any_service_client(SimulatorFullNodeRpcClient, rpc_port, root_path, fingerprint) as (
-        node_client,
-        config,
-        _,
-    ):
+    async with get_any_service_client(SimulatorFullNodeRpcClient, rpc_port, root_path) as (node_client, config):
         if node_client is not None:
             # Display keychain info
             if show_key:
@@ -442,11 +437,7 @@ async def revert_block_height(
     """
     This function allows users to easily revert the chain to a previous state or perform a reorg.
     """
-    async with get_any_service_client(SimulatorFullNodeRpcClient, rpc_port, root_path) as (
-        node_client,
-        _,
-        _,
-    ):
+    async with get_any_service_client(SimulatorFullNodeRpcClient, rpc_port, root_path) as (node_client, _):
         if node_client is not None:
             if use_revert_blocks:
                 if num_new_blocks != 1:
@@ -475,11 +466,7 @@ async def farm_blocks(
     """
     This function is used to generate new blocks.
     """
-    async with get_any_service_client(SimulatorFullNodeRpcClient, rpc_port, root_path) as (
-        node_client,
-        config,
-        _,
-    ):
+    async with get_any_service_client(SimulatorFullNodeRpcClient, rpc_port, root_path) as (node_client, config):
         if node_client is not None:
             if target_address == "":
                 target_address = config["simulator"]["farming_address"]
@@ -501,11 +488,7 @@ async def set_auto_farm(rpc_port: Optional[int], root_path: Path, set_autofarm: 
     """
     This function can be used to enable or disable Auto Farming.
     """
-    async with get_any_service_client(SimulatorFullNodeRpcClient, rpc_port, root_path) as (
-        node_client,
-        _,
-        _,
-    ):
+    async with get_any_service_client(SimulatorFullNodeRpcClient, rpc_port, root_path) as (node_client, _):
         if node_client is not None:
             current = await node_client.get_auto_farming()
             if current == set_autofarm:

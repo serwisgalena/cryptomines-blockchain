@@ -35,7 +35,7 @@ CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 
 
 @click.group(
-    help=f"\n  Manage Cryptomines blockchain infrastructure ({__version__})\n",
+    help=f"\n  Manage cryptomines blockchain infrastructure ({__version__})\n",
     epilog="Try 'cryptomines start node', 'cryptomines netspace -d 192', or 'cryptomines show -s'",
     context_settings=CONTEXT_SETTINGS,
 )
@@ -84,12 +84,12 @@ def cli(
     check_ssl(Path(root_path))
 
 
-@cli.command("version", short_help="Show Cryptomines version")
+@cli.command("version", help="Show cryptomines version")
 def version_cmd() -> None:
     print(__version__)
 
 
-@cli.command("run_daemon", short_help="Runs Cryptomines daemon")
+@cli.command("run_daemon", help="Runs cryptomines daemon")
 @click.option(
     "--wait-for-unlock",
     help="If the keyring is passphrase-protected, the daemon will wait for an unlock command before accessing keys",
@@ -129,6 +129,7 @@ cli.add_command(passphrase_cmd)
 cli.add_command(beta_cmd)
 cli.add_command(completion)
 cli.add_command(dev_cmd)
+
 
 def main() -> None:
     cli()  # pylint: disable=no-value-for-parameter

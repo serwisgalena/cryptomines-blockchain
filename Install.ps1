@@ -119,6 +119,11 @@ if ($p)
 
 Write-Output ""
 Write-Output "Cryptomines blockchain .\Install.ps1 complete."
+Write-Output "For assistance join us on Discord in the #support chat channel:"
+Write-Output "https://discord.gg/chia"
+Write-Output ""
+Write-Output "Try the Quick Start Guide to running cryptomines-blockchain:"
+Write-Output "https://github.com/Chia-Network/cryptomines-blockchain/wiki/Quick-Start-Guide"
 Write-Output ""
 Write-Output "To install the GUI run '.\venv\scripts\Activate.ps1' then '.\Install-gui.ps1'."
 Write-Output ""

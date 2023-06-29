@@ -54,7 +54,7 @@ class ConditionOpcode(bytes, enum.Enum):
     # block index
     ASSERT_BEFORE_HEIGHT_RELATIVE = bytes([86])
     ASSERT_BEFORE_HEIGHT_ABSOLUTE = bytes([87])
-    
+
     # A condition that is always true and always ignore all arguments
     REMARK = bytes([1])
 

@@ -562,7 +562,7 @@ def streamable(cls: Type[_T_Streamable]) -> Type[_T_Streamable]:
 
     cls._streamable_fields = create_fields(cls)
 
-    return cls # type: ignore[return-value]
+    return cls  # type: ignore[return-value]
 
 
 class Streamable:
