@@ -10,7 +10,7 @@ from chia.types.blockchain_format.vdf import VDFProof
 from chia.types.end_of_slot_bundle import EndOfSubSlotBundle
 from chia.util.ints import uint32, uint128
 from chia.util.streamable import Streamable, streamable
-from bpx.types.blockchain_format.execution_payload import ExecutionPayloadV2
+from chia.types.blockchain_format.execution_payload import ExecutionPayloadV2
 
 
 @streamable
