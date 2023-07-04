@@ -79,8 +79,6 @@ class ConsensusConstants:
     PLOT_FILTER_32_HEIGHT: uint32
 
     GENESIS_EXECUTION_BLOCK_HASH: bytes32
-    V2_EOL_HEIGHT: uint64
-    BRIDGE_ADDRESS: bytes20
 
     def replace(self, **changes: object) -> "ConsensusConstants":
         return dataclasses.replace(self, **changes)
