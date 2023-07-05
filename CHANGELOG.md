@@ -2,9 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project does not yet adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
-for setuptools_scm/PEP 440 reasons.
+## [1.0beta2] Cryptomines blockchain
+
+### Added
+- Added Ethereum connection
+
+### Changed
+- Changed links in Help section
+
+### Fixed
+- Issue with loading keyring status
+- Fixed twitter link
 
 ## [1.0beta2] Cryptomines blockchain
 
@@ -18,7 +26,6 @@ for setuptools_scm/PEP 440 reasons.
 
 ### Changed
 - Updated testnet softfork height so softfork rules take effect on testnet immediately
-- Move to Discord in docs and install scripts
 - Optimize compact proofs
 - Fix soft fork to 60 days
 - Don't subscribe to all coin ids in the DB
@@ -45,7 +52,7 @@ for setuptools_scm/PEP 440 reasons.
 - Issue where node had trouble keeping peers with `assert self.peak is not None` error by not adding transactions to the mempool before it has a valid peak
 - Disconnect untrusted peers if we find a trusted synced one
 - Only compile CLVM if source newer than hex
-- Fixed windows issues with passphrase prompt on CLI by flushing prompt (Fixes #14889)
+- Fixed windows issues with passphrase prompt on CLI by flushing prompt
 - Fix removal while iterating over connections set
 - Fix the mempool fee rate calculation
 - Assert_before_height, assert_before_seconds fields in MempoolItem
@@ -61,7 +68,7 @@ for setuptools_scm/PEP 440 reasons.
 - Fix, simplify, and test `TransactionRecord.is_valid`
 - Check for directory existence before creating offer
 - Fix manage_clvm.py hash building and std libraries
-- Resolve introducer right before the connection attempt (Fixed #14888)
+- Resolve introducer right before the connection attempt
 - Async DNS lookups
 - Move assignments of `WalletStateManager._sync_target`
 - Lock `WalletStateManager.lock` while populating balances initially
@@ -534,9 +541,9 @@ for setuptools_scm/PEP 440 reasons.
 - Fixed offer compression backwards compatibility
 - Fixed royalty percentage check for NFT0 NFTs, and made the check for an offer containing an NFT more generalized
 - Fixed timing with asyncio context switching that could prevent networking layer from responding to ping
-- Fixed issues with harvesters not reconnecting properly - fixes #11466
-- Return not synced if there are no connections - fixes #12090
-- Fix issues with wallet resending transactions on various mempool and node errors - fixes #10873
+- Fixed issues with harvesters not reconnecting properly
+- Return not synced if there are no connections
+- Fix issues with wallet resending transactions on various mempool and node errors
 - Fix some issues with `plotnft show`
 - Handle ephemeral ports and dual stack (ipv4 & ipv6)
 - Fix issues when wallet syncing and rolling back too far in the past
