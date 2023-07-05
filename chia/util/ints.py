@@ -58,6 +58,12 @@ class uint128(StructStream):
     MINIMUM: ClassVar[uint128]
     MAXIMUM: ClassVar[uint128]
 
+# Required for ExecutionPayload
+@parse_metadata_from_name
+class uint256(StructStream):
+    MINIMUM: ClassVar[uint256]
+    MAXIMUM: ClassVar[uint256]
+
 
 class int512(StructStream):
     PACK = None

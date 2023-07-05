@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any, Awaitable, Callable, Dict, List, Optional, Set, Tuple, Union
 
 from blspy import AugSchemeMPL
+from web3 import Web3
 
 from chia.consensus.block_creation import unfinished_block_to_full_block
 from chia.consensus.block_record import BlockRecord
@@ -76,6 +77,7 @@ from chia.util.limited_semaphore import LimitedSemaphore
 from chia.util.path import path_from_root
 from chia.util.profiler import mem_profile_task, profile_task
 from chia.util.safe_cancel_task import cancel_task_safe
+from chia.full_node.execution_client import ExecutionClient
 
 
 # This is the result of calling peak_post_processing, which is then fed into peak_post_processing_2
@@ -125,6 +127,7 @@ class FullNode:
     _blockchain: Optional[Blockchain]
     _timelord_lock: Optional[asyncio.Lock]
     weight_proof_handler: Optional[WeightProofHandler]
+    execution_client: ExecutionClient
 
     @property
     def server(self) -> ChiaServer:
@@ -158,6 +161,7 @@ class FullNode:
         self.uncompact_task = None
         self.compact_vdf_requests = set()
         self.log = logging.getLogger(name)
+        self.execution_client = None
 
         # TODO: Logging isn't setup yet so the log entries related to parsing the
         #       config would end up on stdout if handled here.
@@ -283,6 +287,10 @@ class FullNode:
         self.state_changed_callback = callback
 
     async def _start(self) -> None:
+        if not Web3.is_address(self.config["coinbase"]):
+            raise ValueError("Coinbase is not a valid address, please check your config file")
+        self.execution_client = ExecutionClient(self)
+        
         self._timelord_lock = asyncio.Lock()
         self._compact_vdf_sem = LimitedSemaphore.create(active_limit=4, waiting_limit=20)
 
@@ -345,6 +353,7 @@ class FullNode:
             coin_store=self.coin_store,
             block_store=self.block_store,
             consensus_constants=self.constants,
+            execution_client=self.execution_client,
             blockchain_dir=self.db_path.parent,
             reserved_cores=reserved_cores,
             multiprocessing_context=self.multiprocessing_context,
@@ -411,6 +420,7 @@ class FullNode:
                     sanitize_weight_proof_only,
                 )
             )
+        asyncio.create_task(self.execution_client.exchange_transition_configuration_task())
         self.initialized = True
         if self.full_node_peers is not None:
             asyncio.create_task(self.full_node_peers.start())
@@ -1518,7 +1528,19 @@ class FullNode:
             self.full_node_store.clear_seen_unfinished_blocks()
             self.full_node_store.clear_old_cache_entries()
 
-        if self.sync_store.get_sync_mode() is False:
+        synced = self.sync_store.get_sync_mode() is False
+        
+        try:
+            status = await self.execution_client.new_peak(
+                record,
+                synced,
+            )
+            if status == "ACCEPTED":
+                log.warning(f"Execution chain reorg at height {block.height}!")
+        except Exception as e:
+            self.log.error(f"Exception in fork choice update: {e}")
+        
+        if synced:
             await self.send_peak_to_timelords(block)
 
             # Tell full nodes about the new peak

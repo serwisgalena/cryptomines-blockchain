@@ -10,6 +10,7 @@ from chia.types.blockchain_format.vdf import VDFProof
 from chia.types.end_of_slot_bundle import EndOfSubSlotBundle
 from chia.util.ints import uint32, uint128
 from chia.util.streamable import Streamable, streamable
+from chia.types.blockchain_format.execution_payload import ExecutionPayloadV2
 
 
 @streamable
@@ -27,6 +28,7 @@ class HeaderBlock(Streamable):
     foliage_transaction_block: Optional[FoliageTransactionBlock]  # Reward chain foliage data (tx block)
     transactions_filter: bytes  # Filter for block transactions
     transactions_info: Optional[TransactionsInfo]  # Reward chain foliage data (tx block additional)
+    execution_payload: Optional[ExecutionPayloadV2]
 
     @property
     def prev_header_hash(self) -> bytes32:
