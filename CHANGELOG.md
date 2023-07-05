@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0beta2] Cryptomines blockchain
+## [1.0beta3] Cryptomines blockchain
 
 ### Added
 - Added Ethereum connection
