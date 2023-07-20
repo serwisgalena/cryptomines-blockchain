@@ -318,6 +318,15 @@ timelord:
     public_crt: "config/ssl/timelord/public_timelord.crt"
     public_key: "config/ssl/timelord/public_timelord.key"
 
+  # Execution client Engine API endpoint
+  execution_endpoint: http://127.0.0.1:4451
+  # Target address for block rewards and fees
+  coinbase: "0x0000000000000000000000000000000000000000"
+  # Optimistic import allows a full_node client to import, process, and consider a full_node block for its forkchoice head,
+  # even though it has not validated its execution payload
+  optimistic_import: True
+
+
 full_node:
   # The full node server (if run) will run on this port
   port: 44411
