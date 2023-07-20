@@ -326,7 +326,6 @@ timelord:
   # even though it has not validated its execution payload
   optimistic_import: True
 
-
 full_node:
   # The full node server (if run) will run on this port
   port: 44411
